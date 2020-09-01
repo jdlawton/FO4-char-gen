@@ -1,0 +1,26 @@
+{
+  "name": "fo4-char-gen",
+  "version": "1.0.0",
+  "description": "A full stack Fallout 4 character management application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jdlawton/fo4-char-gen.git"
+  },
+  "author": "Joe Lawton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jdlawton/fo4-char-gen/issues"
+  },
+  "homepage": "https://github.com/jdlawton/fo4-char-gen#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4"
+  }
+}
