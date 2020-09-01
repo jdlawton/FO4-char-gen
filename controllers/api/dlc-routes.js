@@ -72,7 +72,7 @@ router.delete('/:id', (req, res) => {
     })
         .then(dbDlcData => {
             if(!dbDlcData) {
-                res.status(404).json({message: 'No dlc found with this id'});
+                res.status(404).json({message: 'No DLC found with this id'});
                 return;
             }
             res.json(dbDlcData);
