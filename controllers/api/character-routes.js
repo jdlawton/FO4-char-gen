@@ -1,9 +1,21 @@
 const router = require('express').Router();
-const {Character} = require('../../models/');
+const {Character, User, Perk, Dlc} = require('../../models/');
 
 //GET all characters /api/characters
 router.get('/', (req, res) => {
-    Character.findAll()
+    Character.findAll({
+        attributes: {exclude: ['user_id']},
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: Perk,
+                attributes: ['name']
+            }
+        ]
+    })
         .then(dbCharacterData => res.json(dbCharacterData))
         .catch(err => {
             console.log(err);

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Dlc} = require('../../models/');
+const {Character, User, Perk, Dlc} = require('../../models/');
 
 //GET all dlc /api/dlc
 router.get('/', (req, res) => {

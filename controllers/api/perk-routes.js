@@ -1,9 +1,27 @@
 const router = require('express').Router();
-const {Perk} = require('../../models/');
+const {Character, User, Perk, Dlc} = require('../../models/');
+const { rawAttributes } = require('../../models/dlc');
 
 //GET all perks /api/perks
 router.get('/', (req, res) => {
-    Perk.findAll()
+    Perk.findAll({
+        attributes: [
+            'id',
+            'name',
+            'requirement',
+            'lvl_requirement',
+            'num_ranks',
+            'effect',
+            'granted_by',
+            'location'
+        ],
+        include: [
+            {
+                model: Dlc,
+                attributes: ['name']
+            }
+        ]
+    })
         .then(dbPerkData => res.json(dbPerkData))
         .catch(err => {
             console.log(err);
@@ -16,7 +34,23 @@ router.get('/:id', (req, res) => {
     Perk.findOne({
         where: {
             id: req.params.id
-        }
+        },
+        attributes: [
+            'id',
+            'name',
+            'requirement',
+            'lvl_requirement',
+            'num_ranks',
+            'effect',
+            'granted_by',
+            'location'
+        ],
+        include: [
+            {
+                model: Dlc,
+                attributes: ['name']
+            }
+        ]
     })
         .then(dbPerkData => {
             if(!dbPerkData) {
