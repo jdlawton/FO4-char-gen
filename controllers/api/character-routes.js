@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {Character, User, Perk, Dlc} = require('../../models/');
+const sequelize = require('../../config/connection');
+const {Character, User, Perk, Dlc, CharacterPerk} = require('../../models/');
 
 //GET all characters /api/characters
 router.get('/', (req, res) => {
@@ -10,12 +11,13 @@ router.get('/', (req, res) => {
                 model: User,
                 attributes: ['username']
             },
-            {
+            /*{
                 model: Perk,
                 attributes: ['name']
-            }
+            }*/
         ]
     })
+        
         .then(dbCharacterData => res.json(dbCharacterData))
         .catch(err => {
             console.log(err);
@@ -28,7 +30,18 @@ router.get('/:id', (req, res) => {
     Character.findOne({
         where: {
             id: req.params.id
-        }
+        },
+        attributes: {exclude: ['user_id']},
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: CharacterPerk,
+                as: 'character_perks'
+            }
+        ]
     })
         .then(dbCharacterData => {
             if(!dbCharacterData) {
@@ -75,6 +88,32 @@ router.post('/', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
+});
+
+//Add a character perk /api/characters/addperk
+router.put('/addperk', (req, res) => {
+    CharacterPerk.create({
+        character_id: req.body.character_id,
+        perk_id: req.body.perk_id
+    }).then(() => {
+        //then find the perk we just added
+        return Perk.findOne({
+            where: {
+                id: req.body.perk_id
+            },
+            attributes: [
+                'id',
+                'name',
+                'effect'
+            ]
+        })
+            .then(dbPerkData => res.json(dbPerkData))
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    });
+
 });
 
 //UPDATE a character /api/characters/1

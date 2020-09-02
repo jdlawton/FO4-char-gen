@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Character, User, Perk, Dlc} = require('../../models/');
+const {Character, User, Perk, Dlc, CharacterPerk} = require('../../models/');
 const { rawAttributes } = require('../../models/dlc');
 
 //GET all perks /api/perks
