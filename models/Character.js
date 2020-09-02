@@ -15,10 +15,6 @@ Character.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        level: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1
-        },
         strength: {
             type: DataTypes.INTEGER,
             defaultValue: 1
@@ -46,74 +42,6 @@ Character.init(
         luck: {
             type: DataTypes.INTEGER,
             defaultValue: 1
-        },
-        hit_points: {
-            type: DataTypes.INTEGER,
-            defaultValue: 85
-        },
-        action_points: {
-            type: DataTypes.INTEGER,
-            defaultValue: 70
-        },
-        carry_weight: {
-            type: DataTypes.INTEGER,
-            defaultValue: 210
-        },
-        damage_res: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        energy_res: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        poison_res: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        radiation_res: {
-            type: DataTypes.INTEGER,
-            defaultValue: 0
-        },
-        melee_bonus: {
-            type: DataTypes.INTEGER,
-            defaultValue: 10
-        },
-        exp_mod: {
-            type: DataTypes.INTEGER,
-            defaultValue: 3
-        },
-        lv2_perk: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1,
-            references: {
-                model: 'perk',
-                key: 'id'
-            }
-        },
-        lv3_perk: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1,
-            references: {
-                model: 'perk',
-                key: 'id'
-            }
-        },
-        lv4_perk: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1,
-            references: {
-                model: 'perk',
-                key: 'id'
-            }
-        },
-        lv5_perk: {
-            type: DataTypes.INTEGER,
-            defaultValue: 1,
-            references: {
-                model: 'perk',
-                key: 'id'
-            }
         },
         user_id: {
             type: DataTypes.INTEGER,

@@ -60,7 +60,6 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     Character.create({
         name: req.body.name,
-        level: req.body.level,
         strength: req.body.strength,
         perception: req.body.perception,
         endurance: req.body.endurance,
@@ -68,19 +67,6 @@ router.post('/', (req, res) => {
         charisma: req.body.charisma,
         agility: req.body.agility,
         luck: req.body.luck,
-        hit_points: req.body.hit_points,
-        action_points: req.body.action_points,
-        carry_weight: req.body.carry_weight,
-        damage_res: req.body.damage_res,
-        energy_res: req.body.energy_res,
-        poison_res: req.body.poison_res,
-        radiation_res: req.body.radiation_res,
-        melee_bonus: req.body.melee_bonus,
-        exp_mod: req.body.exp_mod,
-        lv2_perk: req.body.lv2_perk,
-        lv3_perk: req.body.lv3_perk,
-        lv4_perk: req.body.lv4_perk,
-        lv5_perk: req.body.lv5_perk,
         user_id: req.body.user_id
     })
         .then(dbCharacterData => res.json(dbCharacterData))
