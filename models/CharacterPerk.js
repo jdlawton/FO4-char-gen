@@ -10,6 +10,10 @@ CharacterPerk.init(
             primaryKey: true,
             autoIncrement: true
         },
+        level_taken: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         character_id: {
             type: DataTypes.INTEGER,
             allowNull: false,

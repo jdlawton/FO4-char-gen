@@ -79,6 +79,7 @@ router.post('/', (req, res) => {
 //Add a character perk /api/characters/addperk
 router.put('/addperk', (req, res) => {
     CharacterPerk.create({
+        level_taken: req.body.level_taken,
         character_id: req.body.character_id,
         perk_id: req.body.perk_id
     }).then(() => {
