@@ -1,0 +1,28 @@
+
+<article class="post">
+    <div class="title">
+    <h2>User Dashboard</h2>
+
+    <p>
+        The user dashboard will make all of the user's characters available to them. I don't want to have all of the character data being displayed, just getting
+        basic information like the Character Name and Level. User can then click on the Character Name as a link to the character-view page where there they can 
+        view all of the Character Details and edit their Character Data.
+    </p>
+
+{{#if characters.length}}
+<section>
+    <h2>Your Characters</h2>
+    <ol>
+        {{#each characters as |character|}}
+        <li>
+            <p>
+                <a href="/dashboard/character/{{character.id}}" class="edit-link">{{character.name}}</a>
+            </p>
+        </li>
+        {{/each}}
+    </ol>
+</section>
+{{/if}}
+
+    </div>
+</article>
