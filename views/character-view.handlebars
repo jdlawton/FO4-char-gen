@@ -1,0 +1,24 @@
+<article class="post">
+    <div class="title">
+    <h2>Single Character View Page {{character.obj2_name}}</h2>
+    <h2>Character:</h2>
+    <h3>{{character.name}} by: {{character.user.username}}</h3>
+    <h2>S.P.E.C.I.A.L</h2>
+    <ul>
+        <li>Strength: {{character.strength}}</li>
+        <li>Perception: {{character.perception}}</li>
+        <li>Endurance: {{character.endurance}}</li>
+        <li>Charisma: {{character.charisma}}</li>
+        <li>Intelligence: {{character.intelligence}}</li>
+        <li>Agility: {{character.agility}}</li>
+        <li>Luck: {{character.luck}}</li>
+    </ul>
+    <hr>
+    <ul>
+        {{#each character.character_perks}}
+            <li>Level {{this.level_taken}} Perk: perk_id {{this.perk_id}}</li>
+        {{/each}}
+    </ul>
+
+    </div>
+</article>
