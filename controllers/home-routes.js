@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
+const perkLookup = require('../utilities/data-manipulation');
 
 router.get('/', (req, res) => {
     //console.log(req.session);
@@ -83,22 +84,23 @@ router.get('/character/:id', (req, res) => {
             }
 
             const character = dbCharacterData.get({plain: true});
-            console.log(character);
-            console.log(character.id);
-            console.log(character.character_perks[0].perk_id);
-            /*return Perk.findOne({
-                where: {
-                    id: character.character_perks[0].perk_id
-                },
-                attributes: [
-                    'id',
-                    'name',
-                    'effect',
-                ]
-            });*/
+            //console.log(character);
+            //console.log(character.id);
+            //console.log(character.character_perks[0].perk_id);
 
+            //call perkLookup and send the character_perks[] array. This will convert the perk_ids into
+            //the perk name and perk effect and send them back. Once back we can paste them into
+            //the character_perks array for display on the character page.
 
-            res.render('character-view', {character});
+            //console.log(character.character_perks);
+
+            perkLookup(character.character_perks).then(perkArray => {
+                //console.log("Logging perkArray in home function");
+                //console.log(perkArray);
+                //console.log("Logging original character_perks arrray");
+                //console.log(character.character_perks);
+                res.render('character-view', {character});
+            });
         })
         .catch(err => {
             console.log(err);
