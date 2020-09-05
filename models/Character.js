@@ -15,32 +15,48 @@ Character.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        level: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 1
+        },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
         strength: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         perception: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         endurance: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         charisma: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         intelligence: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         agility: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         luck: {
             type: DataTypes.INTEGER,
+            allowNull: false,
             defaultValue: 1
         },
         user_id: {

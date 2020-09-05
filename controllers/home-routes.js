@@ -9,6 +9,8 @@ router.get('/', (req, res) => {
         attributes: [
             'id',
             'name',
+            'level',
+            'description',
             'strength',
             'perception',
             'endurance',
@@ -34,7 +36,7 @@ router.get('/', (req, res) => {
     })
         .then(dbCharacterData => {
             //pass a single character object into the homepage template
-            res.render('homepage', dbCharacterData[0].get({plain: true}));
+            res.render('homepage', {loggedIn: req.session.loggedIn});
         })
         .catch(err => {
             console.log(err);

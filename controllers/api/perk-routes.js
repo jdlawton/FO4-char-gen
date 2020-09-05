@@ -8,12 +8,11 @@ router.get('/', (req, res) => {
         attributes: [
             'id',
             'name',
-            'requirement',
-            'lvl_requirement',
-            'num_ranks',
-            'effect',
-            'granted_by',
-            'location'
+            'perk_rank',
+            'req_name',
+            'req_rank',
+            'req_level',
+            'effect'
         ],
         include: [
             {
@@ -38,12 +37,11 @@ router.get('/:id', (req, res) => {
         attributes: [
             'id',
             'name',
-            'requirement',
-            'lvl_requirement',
-            'num_ranks',
-            'effect',
-            'granted_by',
-            'location'
+            'perk_rank',
+            'req_name',
+            'req_rank',
+            'req_level',
+            'effect'
         ],
         include: [
             {
@@ -69,12 +67,11 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     Perk.create({
         name: req.body.name,
-        requirement: req.body.requirement,
-        lvl_requirement: req.body.lvl_requirement,
-        num_ranks: req.body.num_ranks,
+        perk_rank: req.rank.perk_rank,
+        req_name: req.body.req_name,
+        req_rank: req.body.req_rank,
+        req_level: req.body.req_level,
         effect: req.body.effect,
-        granted_by: req.body.granted_by,
-        location: req.body.location,
         dlc_id: req.body.dlc_id
     })
         .then(dbPerkData => res.json(dbPerkData))

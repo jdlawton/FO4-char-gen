@@ -60,6 +60,8 @@ router.get('/:id', (req, res) => {
 router.post('/', (req, res) => {
     Character.create({
         name: req.body.name,
+        level: req.body.level,
+        description: req.body.description,
         strength: req.body.strength,
         perception: req.body.perception,
         endurance: req.body.endurance,

@@ -15,29 +15,25 @@ Perk.init(
             type: DataTypes.STRING,
             allowNull: false
         },
-        requirement: {
+        perk_rank: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        req_name: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
-        lvl_requirement: {
+        req_rank: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: false
         },
-        num_ranks: {
+        req_level: {
             type: DataTypes.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         effect: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        granted_by: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        location: {
-            type: DataTypes.STRING,
-            allowNull: true
         },
         dlc_id: {
             type: DataTypes.INTEGER,
