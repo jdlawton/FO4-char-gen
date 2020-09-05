@@ -72,10 +72,10 @@ router.get('/character/:id', (req, res) => {
 
             perkLookup(character.character_perks).then(perkArray => {
                 //console.log("Logging perkArray in home function");
-                console.log(perkArray);
+                //console.log(perkArray);
                 //console.log("Logging original character_perks arrray");
                 //console.log(character.character_perks);
-                res.render('character-view', {character});
+                res.render('character-view', {character, loggedIn: req.session.loggedIn});
             });
         })
         .catch(err => {
@@ -83,5 +83,10 @@ router.get('/character/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
+
+router.get('/new', (req, res) => {
+    //console.log("Inside /character/new route");
+    res.render('new-character', {loggedIn: req.session.loggedIn});
+})
 
 module.exports = router;

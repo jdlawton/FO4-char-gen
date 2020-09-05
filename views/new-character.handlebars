@@ -1,0 +1,35 @@
+<article class="post">
+    <div class="title">
+    <h2>Create a New Character</h2>
+    
+    <form id="new-character-form">
+        <div>
+            <label for="character-name">Name:</label><br>
+            <input type="text" id="character-name" name="character-name" value="Character Name"><br>
+            Level: <span id="cur-lvl">1</span><br>
+            <label for="build-desc">Description:</label><br>
+            <input type="text" id="build-desc" name="build-desc" value="Build Description"><br>
+        </div>
+        <div>
+            <h2>S.P.E.C.I.A.L.</h2>
+            <p>Points Available: <span id="points-available">21</span></p>
+
+            <div id="special">
+                Strength: <button id="str-dwn"><-</button><span id="cur-str">1</span><button id="str-up">-></button><br>
+                Perception: <button id="per-dwn"><-</button><span id="cur-per">1</span><button id="per-up">-></button><br>
+                Endurance: <button id="end-dwn"><-</button><span id="cur-end">1</span><button id="end-up">-></button><br>
+                Charisma: <button id="cha-dwn"><-</button><span id="cur-cha">1</span><button id="cha-up">-></button><br>
+                Intelligence: <button id="int-dwn"><-</button><span id="cur-int">1</span><button id="int-up">-></button><br>
+                Agility: <button id="agi-dwn"><-</button><span id="cur-agi">1</span><button id="agi-up">-></button><br>
+                Luck: <button id="lck-dwn"><-</button><span id="cur-lck">1</span><button id="lck-up">-></button><br>
+            </div>
+        </div>
+        <div>
+            <button type="submit" id="new-char-btn">Create Character</button>
+        </div>
+    </form>
+
+    </div>
+</article>
+
+<script src="/javascript/new-character.js"></script>

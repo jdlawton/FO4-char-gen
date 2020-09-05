@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
         charisma: req.body.charisma,
         agility: req.body.agility,
         luck: req.body.luck,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
         .then(dbCharacterData => res.json(dbCharacterData))
         .catch(err => {

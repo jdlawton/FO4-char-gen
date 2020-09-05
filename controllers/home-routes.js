@@ -4,6 +4,7 @@ const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
 const perkLookup = require('../utilities/data-manipulation');
 
 router.get('/', (req, res) => {
+    /*
     //console.log(req.session);
     Character.findAll({
         attributes: [
@@ -24,14 +25,14 @@ router.get('/', (req, res) => {
                 model: User,
                 attributes: ['username']
             },
-            /*{
+            {
                 model: CharacterPerk,
                 attributes: [
                     'id',
                     'perk_id',
                     'level_taken'
                 ]
-            }*/
+            }
         ]
     })
         .then(dbCharacterData => {
@@ -41,7 +42,8 @@ router.get('/', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
-        });
+        });*/
+    res.render('homepage', {loggedIn: req.session.loggedIn});
 });
 
 router.get('/login', (req, res) => {
