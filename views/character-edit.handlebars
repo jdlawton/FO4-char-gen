@@ -27,6 +27,7 @@
             <li>Luck: {{character.luck}}</li>
         </ul>
         <hr>
+        <h2>Your Perks:</h2>
         <ul>
             {{#each character.character_perks}}
                 <li>Level {{this.level_taken}} Perk: {{this.name}} Rank: {{this.perk_rank}}<br>Effect: {{this.effect}}</li>
@@ -36,8 +37,50 @@
             <button type="submit" id="edit-char-btn">Save</button>
         </div>
     </form>
+    <hr>
+    <div>
+        <h2>Available Perks:</h2>
+        <div id="available-perk-wrapper">
+            <ul>
+            {{#each character.available_perks}}
+                <li>
+                    <div class="comment">
+                        Perk: <span id="span-perk-name">{{this.name}}</span> Rank: <span id="span-perk-rank">{{this.perk_rank}}</span><br>Effect: <span id="span-perk-effect">{{this.effect}}</span>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+        </div>
+    </div>
 
     </div>
+    <hr>
+    <hr>
+    <h2>Animated Modal with Header and Footer</h2>
+
+<!-- Trigger/Open The Modal -->
+<button id="myBtn">Open Modal</button>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header">
+      <span class="close">&times;</span>
+      <h2 id="modal-perk-name"></h2>
+      <h2 id="modal-perk-rank"></h2>
+    </div>
+    <div class="modal-body">
+      <p id="modal-perk-effect">Some other text...</p>
+    </div>
+    <div class="modal-footer">
+      <h3>Modal Footer</h3>
+    </div>
+  </div>
+
+</div>
+
 </article>
 
 <script src="/javascript/edit-character.js"></script>
