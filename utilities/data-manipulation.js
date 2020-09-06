@@ -16,9 +16,12 @@ async function perkLookup (perkArray) {
             attributes: [
                 'id',
                 'name',
+                'perk_rank',
                 'effect'
             ]
         });
+
+
         perk_data = perk_data.get({plain: true});
         //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         //console.log(perk_data);
@@ -26,6 +29,7 @@ async function perkLookup (perkArray) {
         //console.log(perk_data.effect);
         //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         perkArray[i].name = perk_data.name;
+        perkArray[i].perk_rank = perk_data.perk_rank;
         perkArray[i].effect = perk_data.effect;
         //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         //console.log(perkArray[i]);
@@ -57,5 +61,41 @@ async function perkLookup (perkArray) {
     return(perk_result_plain);*/
 }
 
+async function getAvailablePerks(characterData) {
+    console.log("Inside getAvailablePerks function");
+    console.log(characterData);
+    console.log(characterData.strength);
+    let allPerksArray = await Perk.findAll ({
+        attributes: [
+            'id',
+            'name',
+            'perk_rank',
+            'req_name',
+            'req_rank',
+            'req_level',
+            'effect'
+        ],
+        include: [
+            {
+                model: Dlc,
+                attributes: ['name']
+            }
+        ]
+    });
 
-module.exports = perkLookup;
+
+    //allPerks = allPerks.get({plain: true});
+    allPerks = allPerksArray.map(perks => perks.get({plain: true}));
+    //console.log("--------------------------------------------------------------------");
+    //console.log(allPerks);
+    let availablePerksArray = [];
+
+    //loop through the allPerks array and for each one, loop through all of the elements of the characterData.character_perks array.
+    //if character level >= allPerks[i].req_level && characterData.characater_perks[i].name === allPerks[i].req_name &&& characterData.character_perks[i].perk_rank === allPerks[i].req_rank)
+    //push into avaialblePerksArray. After availablePerksArray is built, return it.
+
+
+}
+
+
+module.exports = {perkLookup, getAvailablePerks};

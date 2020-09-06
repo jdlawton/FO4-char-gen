@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
-const perkLookup = require('../utilities/data-manipulation');
+const {perkLookup, getAvailablePerks} = require('../utilities/data-manipulation');
 
 router.get('/', (req, res) => {
     //res.render('dashboard');
@@ -24,6 +24,7 @@ router.get('/', (req, res) => {
         });
 });
 
+//display a single character on character-view.handlebars
 router.get('/character/:id', (req, res) => {
     Character.findOne({
         where: {
@@ -75,6 +76,9 @@ router.get('/character/:id', (req, res) => {
                 //console.log(perkArray);
                 //console.log("Logging original character_perks arrray");
                 //console.log(character.character_perks);
+                //console.log(character);
+                getAvailablePerks(character);
+
                 res.render('character-view', {character, loggedIn: req.session.loggedIn});
             });
         })

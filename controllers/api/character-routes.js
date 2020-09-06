@@ -93,6 +93,7 @@ router.put('/addperk', (req, res) => {
             attributes: [
                 'id',
                 'name',
+                'perk_rank',
                 'effect'
             ]
         })
