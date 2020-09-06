@@ -52,6 +52,11 @@ router.get('/character/:id', (req, res) => {
                 model: CharacterPerk,
                 as: 'character_perks'
             }
+        ],
+        order:[
+            [
+                CharacterPerk, 'level_taken'
+            ]
         ]
     })
         .then(dbCharacterData => {
@@ -61,6 +66,7 @@ router.get('/character/:id', (req, res) => {
             }
 
             const character = dbCharacterData.get({plain: true});
+            let availablePerkArray;
             //console.log(character);
             //console.log(character.id);
             //console.log(character.character_perks[0].perk_id);
@@ -71,16 +77,43 @@ router.get('/character/:id', (req, res) => {
 
             //console.log(character.character_perks);
 
-            perkLookup(character.character_perks).then(perkArray => {
-                //console.log("Logging perkArray in home function");
-                //console.log(perkArray);
-                //console.log("Logging original character_perks arrray");
-                //console.log(character.character_perks);
+            getAvailablePerks(character).then(perks_list => {
+                //const perks = dbPerkListData.get({plain: true});
+                //console.log("AvailablePerkArray");
+                //console.log(perks);
+                //let test = perks.get({plain: true});
+                //character.available_perks = test;
+                character.available_perks = perks_list;
+                //console.log("Character Data:");
                 //console.log(character);
-                getAvailablePerks(character);
 
-                res.render('character-view', {character, loggedIn: req.session.loggedIn});
+                perkLookup(character.character_perks).then(perkArray => {
+                    //console.log("Logging perkArray in home function");
+                    //console.log(perkArray);
+                    //console.log("Logging original character_perks arrray");
+                    //console.log(character.character_perks);
+                    //console.log(character);
+                    //let availablePerksArray = getAvailablePerks(character);
+                    //console.log("Available Perks Array: ");
+                    //console.log(availablePerksArray);
+                    console.log(character);
+                    res.render('character-view', {character, loggedIn: req.session.loggedIn});
+                });
+
+                //console.log(availablePerkArray);
             });
+
+            //console.log(perks);
+
+
+            
+            /*
+            getAvailablePerks(character).then(availablePerkArray => {
+                console.log("AvailablePerkArray");
+                console.log(availablePerkArray);
+            });*/
+
+            //console.log(availablePerkArray);
         })
         .catch(err => {
             console.log(err);

@@ -62,9 +62,9 @@ async function perkLookup (perkArray) {
 }
 
 async function getAvailablePerks(characterData) {
-    console.log("Inside getAvailablePerks function");
-    console.log(characterData);
-    console.log(characterData.strength);
+    //console.log("Inside getAvailablePerks function");
+    //console.log(characterData);
+    //console.log(characterData.strength);
     let allPerksArray = await Perk.findAll ({
         attributes: [
             'id',
@@ -89,10 +89,131 @@ async function getAvailablePerks(characterData) {
     //console.log("--------------------------------------------------------------------");
     //console.log(allPerks);
     let availablePerksArray = [];
+    //console.log(allPerks);
+    //console.log(characterData.character_perks);
 
     //loop through the allPerks array and for each one, loop through all of the elements of the characterData.character_perks array.
     //if character level >= allPerks[i].req_level && characterData.characater_perks[i].name === allPerks[i].req_name &&& characterData.character_perks[i].perk_rank === allPerks[i].req_rank)
     //push into avaialblePerksArray. After availablePerksArray is built, return it.
+
+    //console.log(characterData.level);
+
+    for (let i=0; i<allPerks.length; i++) {
+        let duplicatePerk = false;
+        //console.log (`Inside allPerks loop. Looking at element ${i}. Name: ${allPerks[i].name}, Rank: ${allPerks[i].perk_rank}`);
+        /*if(allPerks[i].req_name === "Strength" || allPerks[i].req_name === "Perception" || allPerks[i].req_name === "Endurance" || allPerks[i].req_name === "Charisma" || allPerks[i].req_name === "Intelligence" || allPerks[i].req_name === "Agility" || allPerks[i].req_name === "Luck"){
+            availablePerksArray.push(allPerks[i]);
+        }*/
+
+        
+        if(allPerks[i].req_name === "Strength" && allPerks[i].req_rank <= characterData.strength) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Perception" && allPerks[i].req_rank <= characterData.perception) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Endurance" && allPerks[i].req_rank <= characterData.endurance) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Charisma" && allPerks[i].req_rank <= characterData.charisma) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Intelligence" && allPerks[i].req_rank <= characterData.intelligence) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Agility" && allPerks[i].req_rank <= characterData.agility) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        if(allPerks[i].req_name === "Luck" && allPerks[i].req_rank <= characterData.luck) {
+            for (let k=0; k<characterData.character_perks.length; k++){
+                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                    duplicatePerk = true;
+                }
+            }
+            if(!duplicatePerk){
+                availablePerksArray.push(allPerks[i]);
+            }
+            //availablePerksArray.push(allPerks[i]);
+        }
+
+        
+
+        for (let j=0; j<characterData.character_perks.length; j++){
+            //console.log(`Inside characterData.character_perks loop. Looking at element ${j}. Name: ${characterData.character_perks[j].name}, Rank: ${characterData.character_perks[j].perk_rank}`);
+            if(allPerks[i].req_name === characterData.character_perks[j].name && allPerks[i].req_rank === characterData.character_perks[j].perk_rank && allPerks[i].req_level <= characterData.level){
+                    for (let k=0; k<characterData.character_perks.length; k++){
+                        if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                            duplicatePerk = true;
+                        }
+                    }
+                    if(!duplicatePerk){
+                        availablePerksArray.push(allPerks[i]);
+                    }
+                    
+                
+            }
+        }
+    }
+
+    //console.log("===========================================================================================");
+    console.log(availablePerksArray);
+    //let returnArray = availablePerksArray.get({plain: true});
+    return availablePerksArray;
 
 
 }
