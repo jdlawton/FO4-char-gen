@@ -1,0 +1,43 @@
+<article class="post">
+    <div class="title">
+    <h2>Edit Character Page</h2>
+    <h2>Character:</h2>
+    <!--
+    <h3>{{character.name}} by: {{character.user.username}}</h3>
+    <h3>Level: {{character.level}}</h3>
+    <h3>Description: {{character.description}}</h3>
+    -->
+    <form id="edit-character-form">
+        <div>
+            <label for="character-name">Name:</label><br>
+            <input type="text" id="character-name" name="character-name" value="{{character.name}}"><br>
+            Level: <span id="cur-lvl">{{character.level}}</span><br>
+            <label for="build-desc">Description:</label><br>
+            <input type="text" id="build-desc" name="build-desc" value="{{character.description}}"><br>
+        </div>
+    
+        <h2>S.P.E.C.I.A.L</h2>
+        <ul>
+            <li>Strength: {{character.strength}}</li>
+            <li>Perception: {{character.perception}}</li>
+            <li>Endurance: {{character.endurance}}</li>
+            <li>Charisma: {{character.charisma}}</li>
+            <li>Intelligence: {{character.intelligence}}</li>
+            <li>Agility: {{character.agility}}</li>
+            <li>Luck: {{character.luck}}</li>
+        </ul>
+        <hr>
+        <ul>
+            {{#each character.character_perks}}
+                <li>Level {{this.level_taken}} Perk: {{this.name}} Rank: {{this.perk_rank}}<br>Effect: {{this.effect}}</li>
+            {{/each}}
+        </ul>
+        <div>
+            <button type="submit" id="edit-char-btn">Save</button>
+        </div>
+    </form>
+
+    </div>
+</article>
+
+<script src="/javascript/edit-character.js"></script>

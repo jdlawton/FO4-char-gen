@@ -211,7 +211,7 @@ async function getAvailablePerks(characterData) {
     }
 
     //console.log("===========================================================================================");
-    console.log(availablePerksArray);
+    //console.log(availablePerksArray);
     //let returnArray = availablePerksArray.get({plain: true});
     return availablePerksArray;
 
