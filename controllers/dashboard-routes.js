@@ -167,8 +167,28 @@ router.get('/edit/:id', (req, res) => {
             }
 
             const character = dbCharacterData.get({plain: true});
+            //let perks_list = await perkLookup(character.character_perks);
             //let availablePerkArray;
-            //console.log(character);
+            //console.log("HERE I AM");
+            console.log(character);
+            perkLookup(character.character_perks).then(perkArray => {
+                // console.log("The updated character_perks array");
+                // console.log(perkArray);
+                // console.log("Current character data");
+                // console.log (character);
+                getAvailablePerks(character).then(availablePerks => {
+                    //console.log("Checking on availablePerks");
+                    //console.log(availablePerks);
+                    //console.log("Current character data");
+                    //console.log (character);
+                    character.available_perks = availablePerks;
+                    //console.log("Current character data");
+                    //console.log (character);
+                    res.render('character-edit', {character, loggedIn: req.session.loggedIn});
+
+                })
+                
+            })
             //console.log(character.id);
             //console.log(character.character_perks[0].perk_id);
 
@@ -177,14 +197,16 @@ router.get('/edit/:id', (req, res) => {
             //the character_perks array for display on the character page.
 
             //console.log(character.character_perks);
-
+            /*
             getAvailablePerks(character).then(perks_list => {
                 //const perks = dbPerkListData.get({plain: true});
                 //console.log("AvailablePerkArray");
-                //console.log(perks);
+
                 //let test = perks.get({plain: true});
                 //character.available_perks = test;
                 character.available_perks = perks_list;
+                //console.log("--------------------------------------------------------------------");
+                //console.log(perks_list);
                 //console.log("Character Data:");
                 //console.log(character);
 
@@ -197,12 +219,14 @@ router.get('/edit/:id', (req, res) => {
                     //let availablePerksArray = getAvailablePerks(character);
                     //console.log("Available Perks Array: ");
                     //console.log(availablePerksArray);
-                    //console.log(character);
+                    console.log(character);
                     res.render('character-edit', {character, loggedIn: req.session.loggedIn});
                 });
 
                 //console.log(availablePerkArray);
-            });
+            });*/
+
+            
 
             //console.log(perks);
 

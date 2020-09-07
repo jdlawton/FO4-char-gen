@@ -63,7 +63,9 @@ async function perkLookup (perkArray) {
 
 async function getAvailablePerks(characterData) {
     //console.log("Inside getAvailablePerks function");
+    //console.log("============================================================");
     //console.log(characterData);
+    //console.log("============================================================");
     //console.log(characterData.strength);
     let allPerksArray = await Perk.findAll ({
         attributes: [
@@ -90,6 +92,7 @@ async function getAvailablePerks(characterData) {
     //console.log(allPerks);
     let availablePerksArray = [];
     //console.log(allPerks);
+    //console.log("characterData.character_perks array");
     //console.log(characterData.character_perks);
 
     //loop through the allPerks array and for each one, loop through all of the elements of the characterData.character_perks array.
@@ -105,10 +108,12 @@ async function getAvailablePerks(characterData) {
             availablePerksArray.push(allPerks[i]);
         }*/
 
-        
+        //check if the potentialPerk(allPerks[i]) has a requirement name (Strength) and check if the character's strength is >= the perk's required strength
+        //then if that is ok, check the potentialPerk agains the perks the character currently has, if there are any duplicates, ignore the potentialPerk.
+        //if it is not a duplicate, add it to the availablePerksArray.
         if(allPerks[i].req_name === "Strength" && allPerks[i].req_rank <= characterData.strength) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -121,7 +126,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Perception" && allPerks[i].req_rank <= characterData.perception) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -133,7 +138,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Endurance" && allPerks[i].req_rank <= characterData.endurance) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -145,7 +150,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Charisma" && allPerks[i].req_rank <= characterData.charisma) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -157,7 +162,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Intelligence" && allPerks[i].req_rank <= characterData.intelligence) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -169,7 +174,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Agility" && allPerks[i].req_rank <= characterData.agility) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -181,7 +186,7 @@ async function getAvailablePerks(characterData) {
 
         if(allPerks[i].req_name === "Luck" && allPerks[i].req_rank <= characterData.luck) {
             for (let k=0; k<characterData.character_perks.length; k++){
-                if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
+                if(allPerks[i].id === characterData.character_perks[k].perk_id){
                     duplicatePerk = true;
                 }
             }
@@ -192,7 +197,10 @@ async function getAvailablePerks(characterData) {
         }
 
         
-
+        //if the perk is not a rank 1 perk, it will require the previous rank of the perk instead of a SPECIAL stat. this look looks at each element in the allPerks array
+        //and compares the potential perk's req_name and req_rank agains the character's existing perks in the characters character_perks array. If the requirement name and 
+        //rank matches the name and rank of an existing perk, it then loops through the character_perks arrray again to see if the potential perk allPerks[i] already exists in
+        //the character_perks array. If it is not a duplicate, push it to the availablePerksArray.
         for (let j=0; j<characterData.character_perks.length; j++){
             //console.log(`Inside characterData.character_perks loop. Looking at element ${j}. Name: ${characterData.character_perks[j].name}, Rank: ${characterData.character_perks[j].perk_rank}`);
             if(allPerks[i].req_name === characterData.character_perks[j].name && allPerks[i].req_rank === characterData.character_perks[j].perk_rank && allPerks[i].req_level <= characterData.level){
@@ -211,6 +219,7 @@ async function getAvailablePerks(characterData) {
     }
 
     //console.log("===========================================================================================");
+    //console.log("RETURNING AVAILABLEPERKSARRAY")
     //console.log(availablePerksArray);
     //let returnArray = availablePerksArray.get({plain: true});
     return availablePerksArray;
