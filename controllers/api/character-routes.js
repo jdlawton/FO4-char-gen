@@ -1,6 +1,9 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const {Character, User, Perk, Dlc, CharacterPerk} = require('../../models/');
+//const createPDF = require('../../utilities/create-pdf');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 //GET all characters /api/characters
 router.get('/', (req, res) => {
@@ -48,6 +51,7 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({message: 'No character found with this id'});
                 return;
             }
+            //createPDF();
             res.json(dbCharacterData);
         })
         .catch(err => {
@@ -145,5 +149,7 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
+
+
 
 module.exports = router;

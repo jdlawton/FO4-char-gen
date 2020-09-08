@@ -2,6 +2,9 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
 const {perkLookup, getAvailablePerks} = require('../utilities/data-manipulation');
+//const createPDF = require('../utilities/create-pdf');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 router.get('/', (req, res) => {
     //res.render('dashboard');
@@ -26,6 +29,12 @@ router.get('/', (req, res) => {
 
 //display a single character on character-view.handlebars
 router.get('/character/:id', (req, res) => {
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    console.log("++++++++++++++++++++++++++++++++++++++++++");
     Character.findOne({
         where: {
             id: req.params.id
@@ -64,7 +73,9 @@ router.get('/character/:id', (req, res) => {
                 res.status(404).json({message: 'No character found with this id'});
                 return;
             }
-
+            //console.log("++++++++++++++++++++++++++++++++++++++++++")
+            //createPDF();
+            //console.log("++++++++++++++++++++++++++++++++++++++++++")
             const character = dbCharacterData.get({plain: true});
             //let availablePerkArray;
             //console.log(character);
@@ -244,6 +255,50 @@ router.get('/edit/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-})
+});
+
+//GET a character PDF /api/dashboard/character/pdf/:id
+router.get('/character/pdf/:id', (req, res) => {
+    Character.findOne({
+        where: {
+            id: req.params.id
+        },
+        attributes: {exclude: ['user_id']},
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            },
+            {
+                model: CharacterPerk,
+                as: 'character_perks'
+            }
+        ]
+    })
+        .then(dbCharacterData => {
+            if(!dbCharacterData) {
+                res.status(404).json({message: 'No character found with this id'});
+                return;
+            }
+            console.log(dbCharacterData);
+            //PDF code goes here
+            //console.log("TESTING");
+            //create a document
+            const doc = new PDFDocument;
+
+            //Pipe the output to the dist directory
+            //doc.pipe(fs.createWriteStream('./public/dist/character.pdf'));
+            doc.pipe(res);
+
+            doc.text(`This is a sample PDF file`);
+
+            doc.end();
+            //res.json(dbCharacterData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+});
 
 module.exports = router;

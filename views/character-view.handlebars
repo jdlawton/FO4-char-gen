@@ -1,8 +1,11 @@
 <article class="post">
     <div class="title">
     <h2>Single Character View Page</h2>
+    <!--<button id="create-pdf">Save as PDF</button>-->
+    <a href="/dashboard/character/pdf/{{character.id}}" class="edit-link">Get PDF</a>
+    <!--<a href="../dist/character.pdf">Get PDF</a>-->
     <h2>Character:</h2>
-    <h3>{{character.name}} by: {{character.user.username}}</h3>
+    <h3><span id="character-name-span">{{character.name}}</span> by: <span id="username-span">{{character.user.username}}</span></h3>
     <h3>Level: {{character.level}}</h3>
     <h3>Description: {{character.description}}</h3>
     <a href="/dashboard/edit/{{character.id}}">Edit Character</a>
@@ -25,3 +28,4 @@
 
     </div>
 </article>
+<!--<script src="/javascript/character-view.js"></script>-->
