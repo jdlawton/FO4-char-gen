@@ -280,20 +280,62 @@ router.get('/character/pdf/:id', (req, res) => {
                 res.status(404).json({message: 'No character found with this id'});
                 return;
             }
-            console.log(dbCharacterData);
-            //PDF code goes here
-            //console.log("TESTING");
-            //create a document
-            const doc = new PDFDocument;
+            //console.log(dbCharacterData);
+            const character = dbCharacterData.get({plain: true});
+            //console.log(character);
 
-            //Pipe the output to the dist directory
-            //doc.pipe(fs.createWriteStream('./public/dist/character.pdf'));
-            doc.pipe(res);
+            perkLookup(character.character_perks).then(perkArray => {
+                //console.log(character);
+                //console.log(perkArray);
+                //PDF code goes here
+                //create a document
+                const doc = new PDFDocument;
 
-            doc.text(`This is a sample PDF file`);
+                //Pipe the output to the dist directory
+                //doc.pipe(fs.createWriteStream('./public/dist/character.pdf'));
 
-            doc.end();
-            //res.json(dbCharacterData);
+                //send the PDF as an HTML response
+                doc.pipe(res);
+
+                doc.text(
+                    `
+                        Character Name: ${character.name} 
+                        Level: ${character.level}
+                        Build Description: ${character.description}
+
+                        Strength: ${character.strength}
+                        Perception: ${character.perception}
+                        Endurance: ${character.endurance}
+                        Charisma: ${character.charisma}
+                        Intelligence: ${character.intelligence}
+                        Agility: ${character.agility}
+                        Luck: ${character.luck}
+
+                    `);
+
+                
+                for (let i=0; i<character.character_perks.length; i++){
+
+                    // console.log("level taken" + character.character_perks[i].level_taken);
+                    // console.log("perk name" + character.character_perks[i].name);
+                    // console.log("perk rank" + character.character_perks[i].perk_rank);
+                    // console.log("perk effect" + character.character_perks[i].effect);
+
+                    doc.text (`
+                        Level ${character.character_perks[i].level_taken} Perk
+                        ${character.character_perks[i].name}, Rank: ${character.character_perks[i].perk_rank}
+                        ${character.character_perks[i].effect}
+                    `);
+                }
+
+                //finalize the PDF
+                doc.end();
+
+                //no res.json because we are sending the PDF as a response.
+                //res.json(dbCharacterData);
+            });
+
+            
         })
         .catch(err => {
             console.log(err);
