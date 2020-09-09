@@ -16,13 +16,11 @@ Perk.belongsTo(Dlc);
 Character.belongsToMany(Perk, {
     through: CharacterPerk,
     as: 'character_perks'
-    //foreignKey: 'character_id'
 });
 
 Perk.belongsToMany(Character, {
     through: CharacterPerk,
     as: 'character_perks'
-    //foreignKey: 'perk_id'
 })
 
 CharacterPerk.belongsTo(Character);
