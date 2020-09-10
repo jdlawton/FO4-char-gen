@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FO4 Character Generator</title>
+  <title>V.R.M.S.</title>
   <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 
@@ -12,7 +12,7 @@
   <div class="wrapper">
     <header>
       <h1>
-        <a href="/">Fallout4 Character Generator</a>
+        <a href="/">Vault Tec Resource Management System</a>
       </h1>
       <nav>
         {{# if loggedIn}}
@@ -27,10 +27,14 @@
       {{{ body }}}
     </main>
     <footer>
-      See you in the wasteland!
+      <p>Disclaimer: Vault Tec Resource Management System and V.R.M.S are &copy; 2077 Vault Tec Inc.<br>
+      V.R.M.S. access is for authorized Vault Tec representatives, overseers, or management personnel ONLY!</p>
     </footer>
   </div>
+  
+  {{# if loggedIn}}
     <script src="/javascript/logout.js"></script>
+  {{/if}}
 </body>
 
 </html>

@@ -17,9 +17,8 @@ const character_id = window.location.toString().split('/')[
 
 
 // Get the modal
-const modal = document.querySelector("#myModal");
+const modal = document.querySelector("#perk-modal");
 // Get the <span> element that closes the modal
-//const span = document.getElementsByClassName("close")[0];
 const span = document.querySelector(".close");
 const addPerkBtnEl = document.querySelector("#add-perk-btn");
 const cancelBtnEl = document.querySelector("#cancel-btn");
@@ -110,8 +109,8 @@ const selectPerk = function (event) {
 
 async function addPerk (event) {
     //console.log("Inside addPerk");
-    //console.log(event);
-    let perk_id = event.path[2].childNodes[5].lastElementChild.innerText;
+    console.log(event);
+    let perk_id = event.path[2].childNodes[5].childNodes[3].innerText;
     //console.log(perk_id.split(' '));
     perk_id = perk_id.split(' ')[1];
     level_taken = levelEl.textContent;

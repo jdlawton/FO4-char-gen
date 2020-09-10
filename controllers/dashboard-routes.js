@@ -14,12 +14,14 @@ router.get('/', (req, res) => {
         },
         attributes: [
             'id',
-            'name'
+            'name',
+            'level',
+            'description'
         ]
     })
         .then(dbCharacterData => {
             const characters = dbCharacterData.map(character => character.get({plain: true}));
-            res.render('dashboard', {characters, loggedIn: true});
+            res.render('dashboard', {characters, loggedIn: true, username: req.session.username});
         })
         .catch(err => {
             console.log(err);
