@@ -97,7 +97,9 @@ async function editFormHandler(event) {
 const selectPerk = function (event) {
     //console.log(event);
     //console.log(event.target);
-    //console.log(event.path[0].childNodes[1].innerHTML);
+    if(!event.path[0].childNodes[1]){
+        return;
+    }
     modalPerkNameEl.textContent = event.path[0].childNodes[1].innerHTML;
     modalPerkRankEl.textContent = "Rank: " + event.path[0].childNodes[3].innerHTML;
     modalPerkEffectEl.textContent = event.path[0].childNodes[6].innerHTML;
@@ -113,7 +115,8 @@ async function addPerk (event) {
     let perk_id = event.path[2].childNodes[5].childNodes[3].innerText;
     //console.log(perk_id.split(' '));
     perk_id = perk_id.split(' ')[1];
-    level_taken = levelEl.textContent;
+    level_taken = parseInt(levelEl.textContent);
+    level_taken++;
     console.log("Perk id: " + perk_id);
     console.log("character id: "+ character_id);
     console.log("level taken: " + levelEl.textContent);

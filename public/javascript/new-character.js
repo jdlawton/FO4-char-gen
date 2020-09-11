@@ -1,5 +1,5 @@
 //console.log("testing the script");
-const specialEl = document.querySelector("#special");
+const specialEl = document.querySelector("#new-stats");
 const pointsAvailableEl = document.querySelector("#points-available");
 const curStrEl = document.querySelector("#cur-str");
 const curPerEl = document.querySelector("#cur-per");
@@ -196,6 +196,7 @@ async function newCharFormHandler (event) {
     
         if (response.ok) {
             console.log("success!");
+            document.location.replace('/dashboard');
         } else {
             alert(response.statusText);
         }

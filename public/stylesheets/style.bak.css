@@ -1,0 +1,312 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: rgb(71,117,141);
+  --secondary-color: rgb(206,203,122);
+  --tertiary-color: rgb(0,0,0);
+  padding: 0;
+  margin: 0;
+}
+
+body, html {
+  height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+}
+
+.wrapper {
+  min-width: 100%;
+  min-height: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1%;
+  background-color: var(--secondary-color);
+}
+
+header h1 {
+  font-size: 1em;
+}
+
+
+
+footer {
+  background-color: var(--secondary-color);
+  display: flex;
+  justify-content: center;
+  padding: 1%;
+  
+}
+
+main {
+  flex: 1;
+  padding: 2% 4%;
+  
+}
+
+
+a {
+  text-decoration: none;
+  color: var(--tertiary-color);
+  font-weight: bold;
+  transition: color .1s;
+}
+
+a:hover {
+  color: var(--primary-color);
+}
+
+ul {
+  list-style-type: none;
+}
+
+li a:hover {
+  color: var(--secondary-color);
+}
+
+li p {
+  margin-top: 0;
+}
+
+h2 {
+  color: var(--secondary-color);
+}
+
+button {
+  background-color: var(--secondary-color);
+  border: 0;
+  padding: 1%;
+  font-weight: bold;
+  transition: background-color .1s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: rgb(226,225,175); 
+}
+
+.btn-no-style {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--tertiary-color);
+  font-size: 100%;
+  font-weight: bold;
+  transition: color .1s;
+  margin-left: 16px;
+}
+
+.btn-no-style:hover {
+  background: none;
+  color: var(--primary-color);
+}
+
+form > div {
+  margin-bottom: 1%;
+}
+
+form label {
+  font-weight: bold;
+  display: block;
+}
+
+input {
+  padding: .5%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 300px;
+  margin-bottom: 1%;
+  background-color: var(--secondary-color);
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #3486eb;
+}
+
+.content {
+  margin-bottom: 2%;
+  line-height: 150%;
+}
+
+.section-header {
+  border-bottom: 1px solid var(--secondary-color);
+}
+
+.btn {
+  background-color: var(--secondary-color);
+  color: var(--tertiary-color);
+  border: 0;
+  margin: 1%;
+  padding: 1%;
+  font-weight: bold;
+  transition: background-color .1s;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn:hover {
+  background-color: rgb(226,225,175);
+  color: var(--tertiary-color);
+}
+
+.section-title {
+  display: inline;
+}
+
+.list-heading {
+  
+  justify-content: space-between;
+  align-items: flex-end;
+  display: flex;
+}
+
+#login {
+  margin-bottom: 5%;
+}
+
+
+#character-name-span {
+  font-size: 30px;
+  color: var(--secondary-color);
+}
+
+.character-data {
+  justify-content: space-around;
+  display: flex;
+}
+
+.character-data .btn {
+  padding: 3%;
+}
+
+.character-data input {
+  padding: 2.5%;
+}
+
+.special, #points-available {
+  font-size: 24px;
+  padding: 0;
+  width: 25%;
+}
+
+.character-perk:nth-child(odd) {
+  background-color: var(--secondary-color);
+}
+
+#level-span {
+  font-size: 20px;
+}
+
+.perk-list {
+  padding: 1%;
+  margin-bottom: 1%;
+}
+
+#span-perk-id {
+  display: none;
+}
+
+.stat-btn {
+  padding: 4%;
+  font-size: 20px;
+  margin: 0 3.5%;
+}
+
+#new-stats li {
+  margin-bottom: 2%;
+}
+
+.delete-modal-btn {
+  background-color: var(--primary-color);
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 80%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top:-300px; opacity:0} 
+  to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+  from {top:-300px; opacity:0}
+  to {top:0; opacity:1}
+}
+
+/* The Close Button */
+.close {
+  color: var(--secondary-color);
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header {
+  padding: 2px 16px;
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+}
+
+.modal-body {
+  padding: 2px 16px;
+  background-color: var(--secondary-color);
+}
+
+.modal-footer {
+  padding: 2px 16px;
+  background-color: var(--primary-color);
+  color: var(--tertiary-color);
+}
+
+#modal-perk-id {
+  display: none;
+}

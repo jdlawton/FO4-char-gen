@@ -8,7 +8,8 @@
                 <h3>Description: {{character.description}}</h3>
                 <a href="/dashboard/edit/{{character.id}}" class="btn">Edit</a>
                 <a href="/dashboard/character/pdf/{{character.id}}" class="edit-link btn" target="_blank">Get PDF</a>
-                <a href="" id="delete-character" class="btn">Delete</a>
+                <!--<a href="" id="delete-character" class="btn">Delete</a>-->
+                <button class="btn" id="call-modal-btn">Delete</button>
             </div>
         
             <div>
@@ -35,7 +36,23 @@
             {{/each}}
             </ul>
         </div>
-        
+    </div>
+
+    <div id="delete-modal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Are you sure you would like to delete this character?</h2>
+            </div>
+            <div class="modal-body">
+                <button class="btn delete-modal-btn delete-character-btn">Delete</button>
+                <button id="cancel-btn" class="btn delete-modal-btn">Cancel</button>
+            </div>
+        </div>
 
     </div>
+
 </article>
+<script src="/javascript/delete-character.js"></script>
