@@ -1,4 +1,6 @@
-const perkWrapperEl = document.querySelector("#available-perk-wrapper");
+const perkWrapperEl = document.querySelector(".available-perks");
+const editCharFormEl = document.querySelector('#edit-character-form');
+
 const modalPerkNameEl = document.querySelector("#modal-perk-name");
 const modalPerkRankEl = document.querySelector("#modal-perk-rank");
 const modalPerkEffectEl = document.querySelector("#modal-perk-effect");
@@ -11,6 +13,7 @@ const spanPerkIdEl = document.querySelector("#span-perk-id");
 const spanPerkDlcEl = document.querySelector("#span-perk-dlc");
 
 const levelEl = document.querySelector("#cur-lvl");
+
 const character_id = window.location.toString().split('/')[
     window.location.toString().split('/').length-1
 ];
@@ -29,20 +32,21 @@ span.onclick = function() {
   }
 
 cancelBtnEl.onclick = function() {
+    //console.log("clicking cancel");
     modal.style.display = "none";
+    return;
 }
   
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+if (event.target == modal) {
+    modal.style.display = "none";
+}
+}
 
-
-//when a post id edited, and the update button is pressed, this function will send the PUT to the api to update the database with the new info.
 async function editFormHandler(event) {
     console.log("Inside editFormHandler");
+    console.log(event.target);
     event.preventDefault();
 
     const id = window.location.toString().split('/')[
@@ -110,16 +114,16 @@ const selectPerk = function (event) {
 }
 
 async function addPerk (event) {
-    //console.log("Inside addPerk");
+    console.log("Inside addPerk");
     console.log(event);
-    let perk_id = event.path[2].childNodes[5].childNodes[3].innerText;
+    let perk_id = event.path[2].childNodes[3].innerText;
     //console.log(perk_id.split(' '));
     perk_id = perk_id.split(' ')[1];
     level_taken = parseInt(levelEl.textContent);
     level_taken++;
     console.log("Perk id: " + perk_id);
     console.log("character id: "+ character_id);
-    console.log("level taken: " + levelEl.textContent);
+    console.log("level taken: " + level_taken);
 
     let response = await fetch(`/api/characters/addperk`, {
         method: 'PUT',
@@ -163,6 +167,7 @@ async function updateLevel () {
     }
 }
 
-document.querySelector('#edit-character-form').addEventListener('submit', editFormHandler);
+editCharFormEl.addEventListener('submit', editFormHandler);
 perkWrapperEl.addEventListener('click', selectPerk);
 addPerkBtnEl.addEventListener('click', addPerk);
+

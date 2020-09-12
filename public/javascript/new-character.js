@@ -1,5 +1,6 @@
 //console.log("testing the script");
-const specialEl = document.querySelector("#new-stats");
+const specialEl = document.querySelector(".special-stats");
+const newCharFormEl = document.querySelector(".new-character-form");
 const pointsAvailableEl = document.querySelector("#points-available");
 const curStrEl = document.querySelector("#cur-str");
 const curPerEl = document.querySelector("#cur-per");
@@ -170,7 +171,8 @@ async function newCharFormHandler (event) {
 
     //console.log("Inside the newCharFormHandler");
     const name = document.querySelector('input[name="character-name"]').value.trim();
-    const level = document.querySelector("#cur-lvl").textContent;
+    //const level = document.querySelector("#cur-lvl").textContent;
+    const level = 1;
     const description = document.querySelector('input[name="build-desc"]').value.trim();
     const pointsAvailable = parseInt(pointsAvailableEl.textContent);
 
@@ -221,4 +223,4 @@ async function newCharFormHandler (event) {
 }
 
 specialEl.addEventListener('click', assignStats);
-document.querySelector('#new-character-form').addEventListener('submit', newCharFormHandler);
+newCharFormEl.addEventListener('submit', newCharFormHandler);

@@ -1,34 +1,28 @@
-
-<article class="content">
-    <div class="section-header">
-    <h2>Welcome Overseer {{username}}</h2>
-    <p>
-        The user dashboard will make all of the user's characters available to them. I don't want to have all of the character data being displayed, just getting
-        basic information like the Character Name and Level. User can then click on the Character Name as a link to the character-view page where there they can 
-        view all of the Character Details and edit their Character Data.
-    </p>
-    
-    </div>
-
-<div>
-{{#if characters.length}}
-<div class="list-heading">
-    <h2 class ="section-title">Your Characters</h2>
-    <a href="/dashboard/new" class="btn">New Character</a>
+<div class="body-text">
+<p>
+    The user dashboard will make all of the user's characters available to them. I don't want to have all of the character data being displayed, just getting
+    basic information like the Character Name and Level. User can then click on the Character Name as a link to the character-view page where there they can 
+    view all of the Character Details and edit their Character Data.
+</p>
 </div>
-<section class="list-body">
-    <ul>
+<div>
+    <a href="/dashboard/new" class="link-button">New Character</a>
+</div>
+
+<div class="divider section-divider"> </div>
+
+{{#if characters.length}}
+    <section class="character-list">
         {{#each characters as |character|}}
-        <li>    
-                <a href="/dashboard/character/{{character.id}}" class="edit-link">{{character.name}} - Level: {{character.level}}</a>
-                <p>{{character.description}}</p>
-        </li>
-        {{/each}}
-    </ul>
-</section>
+        <div class="character-entry">
+            <!--<a href="/dashboard/character/{{character.id}}" class="character-name">{{character.name}} - Level: {{character.level}}</a>-->
+            <p>{{character.name}} - Level: {{character.level}}<br>
+            {{character.description}}<span class="hidden">{{character.id}}</span></p>
+        </div>      
+        {{/each}} 
+    </section>
 {{/if}}
 
-
-
-    </div>
-</article>
+{{# if characters.length}}
+    <script src="/javascript/dashboard.js"></script>
+{{/if}}

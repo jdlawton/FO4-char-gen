@@ -1,0 +1,92 @@
+<article class="content">
+    <div class="section-header">
+    <h2>Edit Character</h2>
+
+    <form id="edit-character-form">
+        <div class="character-data">
+            <div>
+                <label for="character-name">Name:</label>
+                <input type="text" id="character-name" name="character-name" value="{{character.name}}">
+                <label for="build-desc">Description:</label>
+                <input type="text" id="build-desc" name="build-desc" value="{{character.description}}">
+                <p id="level-span"><b>Level: <span id="cur-lvl">{{character.level}}</span></b></p>
+                <button type="submit" id="edit-char-btn" class="btn">Save</button>
+            </div>
+
+            <div>
+                <h2>S.P.E.C.I.A.L</h2>
+                <ul class="special">
+                    <li>Strength: <b>{{character.strength}}</b></li>
+                    <li>Perception: <b>{{character.perception}}</b></li>
+                    <li>Endurance: <b>{{character.endurance}}</b></li>
+                    <li>Charisma: <b>{{character.charisma}}</b></li>
+                    <li>Intelligence: <b>{{character.intelligence}}</b></li>
+                    <li>Agility: <b>{{character.agility}}</b></li>
+                    <li>Luck: <b>{{character.luck}}</b></li>
+                </ul>
+            </div>
+        </div>
+        
+        
+    
+        <div>
+            <h2>Your Perks:</h2>
+            <ul>
+            {{#each character.character_perks}}
+                <li class="character-perk">
+                    <div>
+                        Level {{this.level_taken}} Perk - {{this.name}} - Rank {{this.perk_rank}}<br>Effect: {{this.effect}}
+                    </div>
+                    </li>
+            {{/each}}
+            </ul>
+        </div>
+        
+        <div>
+            
+        </div>
+    </form>
+    <div>
+        <h2>Available Perks:</h2>
+        <div id="available-perk-wrapper">
+            <ul>
+            {{#each character.available_perks}}
+                <li class="character-perk">
+                    <div class="perk-list">
+                        <span id="span-perk-name">{{this.name}}</span> - Rank <span id="span-perk-rank">{{this.perk_rank}}</span><br>Effect: <span id="span-perk-effect">{{this.effect}}</span><br>
+                        <span id="span-perk-id">{{this.id}}</span>Available in -  <span id="span-perk-dlc">{{this.dlc.name}}</span>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+        </div>
+    </div>
+
+    </div>
+
+    
+    <div id="perk-modal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="modal-perk-name"></h2>
+            <h2 id="modal-perk-rank"></h2>
+            </div>
+            <div class="modal-body">
+            <p id="modal-perk-effect">Some other text...</p>
+            </div>
+            <div class="modal-footer">
+            <h2 id="modal-perk-dlc">Modal Footer</h2>
+            <p id="modal-perk-id">ID</p>
+                <button id="add-perk-btn">Add Perk</button>
+                <button id="cancel-btn">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
+</article>
+
+<script src="/javascript/edit-character.js"></script>

@@ -294,6 +294,7 @@ input:focus {
   padding: 2px 16px;
   background-color: var(--primary-color);
   color: var(--tertiary-color);
+
 }
 
 .modal-body {

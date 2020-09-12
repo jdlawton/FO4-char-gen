@@ -1,92 +1,152 @@
-<article class="content">
-    <div class="section-header">
-    <h2>Edit Character</h2>
-
+<div>
     <form id="edit-character-form">
-        <div class="character-data">
+    <div class="character-data">
+            <div class="nameplate">
             <div>
-                <label for="character-name">Name:</label>
+                <label for="character-name">Name</label>
                 <input type="text" id="character-name" name="character-name" value="{{character.name}}">
-                <label for="build-desc">Description:</label>
-                <input type="text" id="build-desc" name="build-desc" value="{{character.description}}">
-                <p id="level-span"><b>Level: <span id="cur-lvl">{{character.level}}</span></b></p>
-                <button type="submit" id="edit-char-btn" class="btn">Save</button>
             </div>
-
             <div>
-                <h2>S.P.E.C.I.A.L</h2>
-                <ul class="special">
-                    <li>Strength: <b>{{character.strength}}</b></li>
-                    <li>Perception: <b>{{character.perception}}</b></li>
-                    <li>Endurance: <b>{{character.endurance}}</b></li>
-                    <li>Charisma: <b>{{character.charisma}}</b></li>
-                    <li>Intelligence: <b>{{character.intelligence}}</b></li>
-                    <li>Agility: <b>{{character.agility}}</b></li>
-                    <li>Luck: <b>{{character.luck}}</b></li>
-                </ul>
+                <label for="build-desc">Description</label>
+                <input type="text" id="build-desc" name="build-desc" value="{{character.description}}"><br>
+            </div>
+            <p id="level-span">Level <span id="cur-lvl">{{character.level}}</span></p>
+            <button type="submit" id="edit-char-btn" class="char-button">Update</button>
+        </div>
+</form>
+</div>
+
+        
+
+        <div class="stats-wrapper">
+            <div class="derived-stats">
+                <table>
+                    <tr>
+                        <td>Health:</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Action Points:</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Carry Weight:</td>
+                        <td>250</td>
+                    </tr>
+                    <tr>
+                        <td>Damage Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Energy Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Poison Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Radiation Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                </table>
+            </div>
+    
+            <div class="special-stats">
+                <table>
+                    <tr>
+                        <td>Strength</td>
+                        <td>{{character.strength}}</td>
+                    </tr>
+                    <tr>
+                        <td>Perception</td>
+                        <td>{{character.perception}}</td>
+                    </tr>
+                    <tr>
+                        <td>Endurance</td>
+                        <td>{{character.endurance}}</td>
+                    </tr>
+                    <tr>
+                        <td>Charisma</td>
+                        <td>{{character.charisma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Intelligence</td>
+                        <td>{{character.intelligence}}</td>
+                    </tr>
+                    <tr>
+                        <td>Agility</td>
+                        <td>{{character.agility}}</td>
+                    </tr>
+                    <tr>
+                        <td>Luck</td>
+                        <td>{{character.luck}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
         
-        
+        <div class="divider">
+            <h2>Your Perks</h2>
+        </div>
     
-        <div>
-            <h2>Your Perks:</h2>
-            <ul>
+        <div class="character-perks">
             {{#each character.character_perks}}
-                <li class="character-perk">
-                    <div>
-                        Level {{this.level_taken}} Perk - {{this.name}} - Rank {{this.perk_rank}}<br>Effect: {{this.effect}}
+                <div class="perk-card">
+                    <div class="perk-card-header">
+                        <p>Level {{this.level_taken}}</p>
+                        <p>{{this.name}}</p>
+                        <p>Rank {{this.perk_rank}}</p>
                     </div>
-                    </li>
+                    <div class="perk-card-body">
+                        <p>{{this.effect}}</p>
+                    </div>
+                </div>
             {{/each}}
-            </ul>
         </div>
-        
-        <div>
             
+        <div class="divider">
+            <h2>Available Perks</h2>
         </div>
-    </form>
-    <div>
-        <h2>Available Perks:</h2>
-        <div id="available-perk-wrapper">
+
+        <div class="available-perks">
             <ul>
             {{#each character.available_perks}}
                 <li class="character-perk">
                     <div class="perk-list">
                         <span id="span-perk-name">{{this.name}}</span> - Rank <span id="span-perk-rank">{{this.perk_rank}}</span><br>Effect: <span id="span-perk-effect">{{this.effect}}</span><br>
-                        <span id="span-perk-id">{{this.id}}</span>Available in -  <span id="span-perk-dlc">{{this.dlc.name}}</span>
+                        <span id="span-perk-id" class="hidden">{{this.id}}</span>Available in -  <span id="span-perk-dlc">{{this.dlc.name}}</span>
                     </div>
                 </li>
             {{/each}}
-        </ul>
-        </div>
-    </div>
-
-    </div>
-
-    
-    <div id="perk-modal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-            <span class="close">&times;</span>
-            <h2 id="modal-perk-name"></h2>
-            <h2 id="modal-perk-rank"></h2>
-            </div>
-            <div class="modal-body">
-            <p id="modal-perk-effect">Some other text...</p>
-            </div>
-            <div class="modal-footer">
-            <h2 id="modal-perk-dlc">Modal Footer</h2>
-            <p id="modal-perk-id">ID</p>
-                <button id="add-perk-btn">Add Perk</button>
-                <button id="cancel-btn">Cancel</button>
-            </div>
+            </ul>
         </div>
 
+        <div id="perk-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2 id="modal-perk-name"></h2>
+                    <h2 id="modal-perk-rank"></h2>
+                </div>
+
+                <div class="modal-body">
+                    <p id="modal-perk-effect"></p>
+                </div>
+
+                <div class="modal-footer">
+                    <h2 id="modal-perk-dlc"></h2>
+                    <p id="modal-perk-id">ID</p>
+                    <div class="modal-buttons">
+                        <button id="add-perk-btn" class="char-button">Add Perk</button>
+                        <button id="cancel-btn" class="char-button">Cancel</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
     </div>
 
-</article>
 
-<script src="/javascript/edit-character.js"></script>
+    <script src="/javascript/edit-character.js"></script>

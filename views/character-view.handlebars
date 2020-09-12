@@ -1,58 +1,96 @@
-<article class="content">
-    <div class="character-wrapper">
-        <h2>Character Profile:</h2>
-        <div class="character-data">
-            <div>
-                <h3><span id="character-name-span">{{character.name}}</span> - Level: {{character.level}}</h3>
-                <p>by: <span id="username-span">{{character.user.username}}</span></p>
-                <h3>Description: {{character.description}}</h3>
-                <a href="/dashboard/edit/{{character.id}}" class="btn">Edit</a>
-                <a href="/dashboard/character/pdf/{{character.id}}" class="edit-link btn" target="_blank">Get PDF</a>
-                <!--<a href="" id="delete-character" class="btn">Delete</a>-->
-                <button class="btn" id="call-modal-btn">Delete</button>
-            </div>
+<section class="character-sheet">
+        <div class="nameplate">
+            <h2><span id="character-name-span">{{character.name}}</span> - Level {{character.level}}</h2>
+            <p>{{character.description}}</p>
+        </div>
+        <div class="character-buttons">
+                <a href="/dashboard/edit/{{character.id}}" class="link-button">Edit</a>
+                <a href="/dashboard/character/pdf/{{character.id}}" class="edit-link link-button" target="_blank">Get PDF</a>
+                <button id="call-modal-btn" class="char-button">Delete</button>
+        </div>
         
-            <div>
-                <div>
-                    <h2>S.P.E.C.I.A.L</h2>
-                    <ul class="special">
-                        <li>Strength: <b>{{character.strength}}</b></li>
-                        <li>Perception: <b>{{character.perception}}</b></li>
-                        <li>Endurance: <b>{{character.endurance}}</b></li>
-                        <li>Charisma: <b>{{character.charisma}}</b></li>
-                        <li>Intelligence: <b>{{character.intelligence}}</b></li>
-                        <li>Agility: <b>{{character.agility}}</b></li>
-                        <li>Luck: <b>{{character.luck}}</b></li>
-                    </ul>
-                </div>
-                
+        <div class="stats-wrapper">
+            <div class="derived-stats">
+                <table>
+                    <tr>
+                        <td>Health:</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Action Points:</td>
+                        <td>100</td>
+                    </tr>
+                    <tr>
+                        <td>Carry Weight:</td>
+                        <td>250</td>
+                    </tr>
+                    <tr>
+                        <td>Damage Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Energy Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Poison Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                    <tr>
+                        <td>Radiation Resistance:</td>
+                        <td>0%</td>
+                    </tr>
+                </table>
+            </div>
+    
+            <div class="special-stats">
+                <table>
+                    <tr>
+                        <td>Strength</td>
+                        <td>{{character.strength}}</td>
+                    </tr>
+                    <tr>
+                        <td>Perception</td>
+                        <td>{{character.perception}}</td>
+                    </tr>
+                    <tr>
+                        <td>Endurance</td>
+                        <td>{{character.endurance}}</td>
+                    </tr>
+                    <tr>
+                        <td>Charisma</td>
+                        <td>{{character.charisma}}</td>
+                    </tr>
+                    <tr>
+                        <td>Intelligence</td>
+                        <td>{{character.intelligence}}</td>
+                    </tr>
+                    <tr>
+                        <td>Agility</td>
+                        <td>{{character.agility}}</td>
+                    </tr>
+                    <tr>
+                        <td>Luck</td>
+                        <td>{{character.luck}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
-        <div>
-            <h2>Character Perks</h2>
-            <ul>
+        <div class="divider">
+            <h2>Your Perks</h2>
+        </div>
+        <div class="character-perks">
             {{#each character.character_perks}}
-                <li class="character-perk">Level {{this.level_taken}} Perk: {{this.name}} Rank: {{this.perk_rank}}<br>Effect: {{this.effect}}</li>
+                <div class="perk-card">
+                    <div class="perk-card-header">
+                        <p>Level {{this.level_taken}}</p>
+                        <p>{{this.name}}</p>
+                        <p>Rank {{this.perk_rank}}</p>
+                    </div>
+                    <div class="perk-card-body">
+                        <p>{{this.effect}}</p>
+                    </div>
+                </div>
             {{/each}}
-            </ul>
         </div>
-    </div>
-
-    <div id="delete-modal" class="modal">
-
-        <!-- Modal content -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close">&times;</span>
-                <h2>Are you sure you would like to delete this character?</h2>
-            </div>
-            <div class="modal-body">
-                <button class="btn delete-modal-btn delete-character-btn">Delete</button>
-                <button id="cancel-btn" class="btn delete-modal-btn">Cancel</button>
-            </div>
-        </div>
-
-    </div>
-
-</article>
-<script src="/javascript/delete-character.js"></script>
+    </section>

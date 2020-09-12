@@ -21,12 +21,13 @@ header {
 .divider {
     background-color: steelblue;
     padding: 1%;
-    font-weight: bolder;
+    font-weight: bold;
 }
 
 .greeting {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .titlecard {
@@ -37,13 +38,21 @@ header {
 }
 
 nav {
-    display: inline;
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+nav a {
+    margin-right: 10px;
 }
 
 a {
     text-decoration: none;
     transition: color .1s;
     color: black;
+    font-weight: bold;
 }
 
 a:hover {
@@ -67,6 +76,7 @@ a:hover {
 td {
     font-size: 24px;
     padding: 10px;
+    text-align: center;
 }
 
 .perk-card {
@@ -77,7 +87,7 @@ td {
 
 .perk-card:nth-child(even) {
     background-color: #e6f9ff
-  }
+}
 
 .perk-card-header {
     display: flex;
@@ -92,4 +102,258 @@ td {
 .perk-card-body {
     padding: .5%;
     margin: 0;
+}
+
+.body-text {
+    padding: 1%;
+}
+
+.body-text p {
+    margin-bottom: 1%;
+}
+
+.btn-no-style {
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 100%;
+    font-weight: bold;
+    transition: color .1s;
+}
+
+.btn-no-style:hover {
+    color: white;
+    background-color:steelblue;
+}
+
+.link-button {
+      background-color: steelblue;
+      padding: .75%;
+      border-radius: 7px;
+      transition: color .1s;
+      margin: 1%;
+}
+
+.link-button:hover {
+      background-color: lightskyblue;
+      color: black;
+}
+
+.section-divider {
+    margin-top: 2%;
+}
+
+.character-list {
+      padding: 0 4%;
+}
+
+.character-entry {
+    margin-bottom: 2%;
+    padding: 1% 0;
+    font-size: 24px;
+}
+
+.character-entry:nth-child(odd) {
+    background-color: #e6f9ff
+}
+
+.character-name:hover {
+    color: black;
+}
+
+.hidden {
+    display: none;
+}
+
+.welcome-forms {
+    display: flex;
+    justify-content: center;
+}
+
+.welcome-form-wrapper {
+    margin: 50px;
+}
+
+label {
+    display: block;
+}
+
+input {
+    padding: .5%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 1%;
+    font-size: 14px;
+}
+
+button {
+    background-color: steelblue;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    border-radius: 7px;
+}
+
+button:hover {
+    background-color: lightskyblue;
+    transition: color .1s;
+}
+
+.login-toggle-link {
+    margin-left: 40%;
+    font-size: 14px;
+    font-weight: lighter;
+    font-style: italic;
+}
+
+.login-toggle-link:hover{
+    color: black;
+}
+
+.character-buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.char-button {
+    margin: 1%;
+    padding: .75%;
+    font-weight: bold;
+    font-size: 100%;
+}
+
+.login-button, .signup-button {
+    padding: 2.5%;
+}
+
+form {
+    margin-top: 1%;
+}
+
+.stat-btn {
+    padding: 4% 6%;
+    font-size: 20px;
+    margin: 0 3.5%;
+
+}
+
+.special-stats {
+    width: 50%;
+}
+
+table {
+    width: 100%;
+}
+
+.available-points {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1%;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 0;
+    border: 1px solid #888;
+    width: 80%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+  }
+  
+  /* Add Animation */
+  @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+  }
+  
+  @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+  }
+  
+  /* The Close Button */
+  .close {
+    color: var(--secondary-color);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .modal-header {
+    padding: 2px 16px;
+    background-color: steelblue;
+  }
+  
+  .modal-body {
+    padding: 2px 16px;
+    height: 100px;
+    font-size: 20px;
+  }
+  
+  .modal-footer {
+    padding: 2px 16px;
+    background-color: steelblue;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  ul {
+      list-style: none;
+  }
+
+  li {
+      font-size: 20px;
+      margin: 1%;
+  }
+
+  .character-perk:nth-child(odd) {
+    background-color: #e6f9ff
+}
+
+.modal-buttons {
+    width: 25%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-buttons button {
+    padding: 5%;
+}
+
+.character-data label, p {
+    font-weight: bold;
 }

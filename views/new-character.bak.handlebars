@@ -1,0 +1,62 @@
+<article class="content">
+    <div>
+    <h2>Create a New Character</h2>
+    
+    <form id="new-character-form">
+        <div class="character-data">
+            <div>
+                <label for="character-name">Name:</label>
+                <input type="text" id="character-name" name="character-name" placeholder="Character Name">
+                <label for="build-desc">Description:</label>
+                <input type="text" id="build-desc" name="build-desc" placeholder="Build Description"><br>
+                <p><b>Level: <span id="cur-lvl">1</span></b></p>
+            </div>
+            <div class="special">
+                <h2>S.P.E.C.I.A.L.</h2>
+                <p><b>Points Available: <span id="points-available">21</span></b></p>
+
+                <div id="new-stats">
+                    <ul>
+                        <li>
+                            Strength: <button id="str-dwn" class="stat-btn">&#8249;</button><span id="cur-str">1</span><button id="str-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Perception: <button id="per-dwn" class="stat-btn">&#8249;</button><span id="cur-per">1</span><button id="per-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Endurance: <button id="end-dwn" class="stat-btn">&#8249;</button><span id="cur-end">1</span><button id="end-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Charisma: <button id="cha-dwn" class="stat-btn">&#8249;</button><span id="cur-cha">1</span><button id="cha-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Intelligence: <button id="int-dwn" class="stat-btn">&#8249;</button><span id="cur-int">1</span><button id="int-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Agility: <button id="agi-dwn" class="stat-btn">&#8249;</button><span id="cur-agi">1</span><button id="agi-up" class="stat-btn">&#8250;</button>
+                        </li>
+                        <li>
+                            Luck: <button id="lck-dwn" class="stat-btn">&#8249;</button><span id="cur-lck">1</span><button id="lck-up" class="stat-btn">&#8250;</button>
+                        </li>
+                    </ul> 
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+        
+        
+        <div>
+            <button type="submit" id="new-char-btn">Create Character</button>
+        </div>
+    </form>
+
+    </div>
+</article>
+
+<script src="/javascript/new-character.js"></script>
