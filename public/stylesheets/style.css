@@ -358,6 +358,11 @@ table {
     font-weight: bold;
 }
 
+.homepage-list li{
+    font-size: 14px;
+    list-style-type: circle;
+}
+
 @media screen and (max-width: 980px) {
     .titlecard {
         flex-direction: column;
