@@ -1,9 +1,8 @@
+//api CRUD routes relating to characters
+
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const {Character, User, Perk, Dlc, CharacterPerk} = require('../../models/');
-//const createPDF = require('../../utilities/create-pdf');
-const PDFDocument = require('pdfkit');
-const fs = require('fs');
+const {Character, User, Perk, CharacterPerk} = require('../../models/');
 
 //GET all characters /api/characters
 router.get('/', (req, res) => {
@@ -14,10 +13,6 @@ router.get('/', (req, res) => {
                 model: User,
                 attributes: ['username']
             },
-            /*{
-                model: Perk,
-                attributes: ['name']
-            }*/
         ]
     })
         
@@ -51,7 +46,6 @@ router.get('/:id', (req, res) => {
                 res.status(404).json({message: 'No character found with this id'});
                 return;
             }
-            //createPDF();
             res.json(dbCharacterData);
         })
         .catch(err => {
@@ -89,7 +83,7 @@ router.put('/addperk', (req, res) => {
         character_id: req.body.character_id,
         perk_id: req.body.perk_id
     }).then(() => {
-        //then find the perk we just added
+        //then find the perk that was just added
         return Perk.findOne({
             where: {
                 id: req.body.perk_id
@@ -149,7 +143,5 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
-
-
 
 module.exports = router;

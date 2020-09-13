@@ -1,6 +1,5 @@
 const perkWrapperEl = document.querySelector(".available-perks");
 const editCharFormEl = document.querySelector('#edit-character-form');
-
 const modalPerkNameEl = document.querySelector("#modal-perk-name");
 const modalPerkRankEl = document.querySelector("#modal-perk-rank");
 const modalPerkEffectEl = document.querySelector("#modal-perk-effect");
@@ -11,39 +10,36 @@ const spanPerkRankEl = document.querySelector("#span-perk-rank");
 const spanPerkEffectEl = document.querySelector("#span-perk-effect");
 const spanPerkIdEl = document.querySelector("#span-perk-id");
 const spanPerkDlcEl = document.querySelector("#span-perk-dlc");
-
 const levelEl = document.querySelector("#cur-lvl");
-
 const character_id = window.location.toString().split('/')[
     window.location.toString().split('/').length-1
 ];
 
-
-// Get the modal
+//elements related to the modal
 const modal = document.querySelector("#perk-modal");
-// Get the <span> element that closes the modal
 const span = document.querySelector(".close");
 const addPerkBtnEl = document.querySelector("#add-perk-btn");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 
-// When the user clicks on <span> (x), close the modal
+//if the user clicks on the X, or cancel button, or if the user clicks off of the modal, cancel without doing anything.
 span.onclick = function() {
     modal.style.display = "none";
   }
 
 cancelBtnEl.onclick = function() {
-    //console.log("clicking cancel");
     modal.style.display = "none";
     return;
 }
-  
-// When the user clicks anywhere outside of the modal, close it
+
 window.onclick = function(event) {
-if (event.target == modal) {
-    modal.style.display = "none";
-}
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
 }
 
+//The form handler for the edit character form, which is specifically for changing the character name or
+//changing the character description. Adding perks to the character is handled through the selectPerk/addPerk
+//functions and require their own api call.
 async function editFormHandler(event) {
     console.log("Inside editFormHandler");
     console.log(event.target);
@@ -74,33 +70,16 @@ async function editFormHandler(event) {
     });
 
     if (response.ok) {
-        //document.location.replace('/dashboard/');
+        document.location.replace('/dashboard/');
         console.log("ok");
     } else {
         alert(response.statusText);
     }
 }
 
-//console.log(character);
-
-// Get the modal
-
-
-// Get the button that opens the modal
-//var btn = document.getElementById("myBtn");
-
-
-
-// When the user clicks the button, open the modal 
-// btn.onclick = function() {
-//   modal.style.display = "block";
-// }
-
-
-
+//When the user clicks on an available perk, this function displays the modal and populates it with the appropriate data
+//based on the perk clicked on.
 const selectPerk = function (event) {
-    //console.log(event);
-    //console.log(event.target);
     if(!event.path[0].childNodes[1]){
         return;
     }
@@ -109,21 +88,21 @@ const selectPerk = function (event) {
     modalPerkEffectEl.textContent = event.path[0].childNodes[6].innerHTML;
     modalPerkIdEl.textContent = "ID: " + event.path[0].childNodes[9].innerHTML;
     modalPerkDlcEl.textContent = event.path[0].childNodes[11].innerHTML;
-    //console.log(modalPerkNameEl.textContent);
     modal.style.display = "block";
 }
 
+//When the user clicks on the button to confirm adding a perk in the modal, this function will make the fetch to the api
+//to add the perk to the character and database.
 async function addPerk (event) {
-    console.log("Inside addPerk");
-    console.log(event);
+    //the fetch requires the character_id, the perk_id, and the level_taken
+    //gets the perk_id from the modal and splits it to just include the id number.
     let perk_id = event.path[2].childNodes[3].innerText;
-    //console.log(perk_id.split(' '));
     perk_id = perk_id.split(' ')[1];
+    //gets the current character level and increments it before adding the perk since the perk should be recorded for the 
+    //next level due to perks being chosen at level up, i.e. if a character is level 4, they will next choose a perk when they
+    //reach level 5, so we want to record that the perk is taken at level 5.
     level_taken = parseInt(levelEl.textContent);
     level_taken++;
-    console.log("Perk id: " + perk_id);
-    console.log("character id: "+ character_id);
-    console.log("level taken: " + level_taken);
 
     let response = await fetch(`/api/characters/addperk`, {
         method: 'PUT',
@@ -143,6 +122,7 @@ async function addPerk (event) {
     }
 }
 
+//updates the level for the character in the character model.
 async function updateLevel () {
     console.log("inside updateLevel");
     console.log("character_id: " + character_id);

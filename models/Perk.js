@@ -1,3 +1,6 @@
+//Perk model stores all of the game's available character perks and is essentially used as a lookup table, no info is added
+//to this table during normal use.
+
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 

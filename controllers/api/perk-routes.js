@@ -1,6 +1,7 @@
+//api CRUD routes related to character perks
+
 const router = require('express').Router();
-const {Character, User, Perk, Dlc, CharacterPerk} = require('../../models/');
-//const { rawAttributes } = require('../../models/dlc');
+const {Perk, Dlc} = require('../../models/');
 
 
 //GET all perks /api/perks

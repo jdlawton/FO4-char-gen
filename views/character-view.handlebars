@@ -93,4 +93,20 @@
                 </div>
             {{/each}}
         </div>
+
+        <!-- HTML for the delete character modal -->
+        <div id="delete-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close">&times;</span>
+                <h2>Are you sure you would like to delete this character?</h2>
+            </div>
+            <div class="modal-body">
+                <button class="delete-character-btn char-button">Delete</button>
+                <button id="cancel-btn" class="char-button">Cancel</button>
+            </div>
+        </div>
+
+    </div>
     </section>
+    <script src="/javascript/delete-character.js"></script>

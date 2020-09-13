@@ -1,3 +1,6 @@
+//This is the through table for the many-to-many association used by the Character and Perk models, it also tracks the
+//whcih level the character chose a particular perk.
+
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 

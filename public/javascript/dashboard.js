@@ -1,3 +1,5 @@
+//On the user's dashboard, this script listens for which of the user's characters are clicked on and then displays the corresponding view-character page.
+
 const characterListEl = document.querySelector('.character-list');
 
 const selectCharacter = function (event) {

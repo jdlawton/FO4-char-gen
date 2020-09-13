@@ -1,14 +1,17 @@
-const router = require('express').Router();
-const sequelize = require('../config/connection');
-const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
+//The functions in this script are ones that do additional manipulations to the data that is retrieved from the databases. I included them all here 
+//both to eliminate the need to write the same code in multiple places elsewhere and to try and keep my scripts in the controllers directory about
+//retrieving and rendering data as much as I can.
 
+//const router = require('express').Router();
+const sequelize = require('../config/connection');
+const {Perk, Dlc} = require('../models/');
+
+//this function takes the array of perks that a character already possesses (which is obtained from the CharacterPerk through table), and 
+//looks up each of the perks in the perk table to get all of the necessary information that will be needed to display the perk info on the
+//front end.
 async function perkLookup (perkArray) {
-    //console.log("I'm inside perkLookup function.");
-    //console.log("perkArray that was passed equals:")
-    //console.log(perkArray);
 
     for (let i=0; i<perkArray.length; i++){
-        //console.log(perkArray[i]);
         let perk_data = await Perk.findOne({
             where: {
                 id: perkArray[i].perk_id
@@ -21,52 +24,22 @@ async function perkLookup (perkArray) {
             ]
         });
 
-
         perk_data = perk_data.get({plain: true});
-        //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        //console.log(perk_data);
-        //console.log(perk_data.name);
-        //console.log(perk_data.effect);
-        //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         perkArray[i].name = perk_data.name;
         perkArray[i].perk_rank = perk_data.perk_rank;
         perkArray[i].effect = perk_data.effect;
-        //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        //console.log(perkArray[i]);
-        //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
-    //console.log("logging perkArray outside of loop");
-    //console.log(perkArray);
     return perkArray;
-        
-    /*const perk_id = 45;
-    const perk_result = await Perk.findOne({
-        where: {
-            id: perk_id
-        },
-        attributes: [
-            'id',
-            'name',
-            'effect'
-        ]
-    });
-
-    //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    //console.log(perk_result);
-    //console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    const perk_result_plain = perk_result.get({plain: true});
-    //console.log("Perk Result AFTER:");
-    //console.log(perk_result_plain);
-    return(perk_result_plain);*/
 }
 
+//This function creates the list of perks that the character is eligible for at a given level. Perks have two requirements, all perks have a level requirement (which can be level 1),
+//and a second requirement. The second requriement can either be a SPECIAL stat of a certain rank, or having the previous rank of the given perk, i.e. Rifleman Rank 2 requires
+//Rifleman Rank 1. This function first adds all of the perks that a character is eligible for, taking all of these things into consideration as well as ensuring we do not end up
+//with any duplicate perks in the list.
+
 async function getAvailablePerks(characterData) {
-    //console.log("Inside getAvailablePerks function");
-    //console.log("============================================================");
-    //console.log(characterData);
-    //console.log("============================================================");
-    //console.log(characterData.strength);
+
     let allPerksArray = await Perk.findAll ({
         attributes: [
             'id',
@@ -85,32 +58,18 @@ async function getAvailablePerks(characterData) {
         ]
     });
 
-
-    //allPerks = allPerks.get({plain: true});
     allPerks = allPerksArray.map(perks => perks.get({plain: true}));
-    //console.log("--------------------------------------------------------------------");
-    //console.log(allPerks);
+
+    //This is going to be the array of available perks that the app build and ultimately returns.
     let availablePerksArray = [];
-    //console.log(allPerks);
-    //console.log("characterData.character_perks array");
-    //console.log(characterData.character_perks);
-
-    //loop through the allPerks array and for each one, loop through all of the elements of the characterData.character_perks array.
-    //if character level >= allPerks[i].req_level && characterData.characater_perks[i].name === allPerks[i].req_name &&& characterData.character_perks[i].perk_rank === allPerks[i].req_rank)
-    //push into avaialblePerksArray. After availablePerksArray is built, return it.
-
-    //console.log(characterData.level);
-
+    
+    //The meat of the function involves a series of loops. We are going to loop through the list of all perks that we retrieved from the perk table.
     for (let i=0; i<allPerks.length; i++) {
         let duplicatePerk = false;
-        //console.log (`Inside allPerks loop. Looking at element ${i}. Name: ${allPerks[i].name}, Rank: ${allPerks[i].perk_rank}`);
-        /*if(allPerks[i].req_name === "Strength" || allPerks[i].req_name === "Perception" || allPerks[i].req_name === "Endurance" || allPerks[i].req_name === "Charisma" || allPerks[i].req_name === "Intelligence" || allPerks[i].req_name === "Agility" || allPerks[i].req_name === "Luck"){
-            availablePerksArray.push(allPerks[i]);
-        }*/
-
-        //check if the potentialPerk(allPerks[i]) has a requirement name (Strength) and check if the character's strength is >= the perk's required strength
-        //then if that is ok, check the potentialPerk agains the perks the character currently has, if there are any duplicates, ignore the potentialPerk.
-        //if it is not a duplicate, add it to the availablePerksArray.
+        
+        //if the perk is one that has a Strength requirement and the character meets that requirement, loop through the array of perks the 
+        //character already has and see if they have already selected this perk. If so, mark it as a duplicate. If not, push it to the array
+        //of available perks.
         if(allPerks[i].req_name === "Strength" && allPerks[i].req_rank <= characterData.strength) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -120,10 +79,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with a Perception requriement.
         if(allPerks[i].req_name === "Perception" && allPerks[i].req_rank <= characterData.perception) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -133,9 +91,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with a Endurance requriement.
         if(allPerks[i].req_name === "Endurance" && allPerks[i].req_rank <= characterData.endurance) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -145,9 +103,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with a Charisma requriement.
         if(allPerks[i].req_name === "Charisma" && allPerks[i].req_rank <= characterData.charisma) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -157,9 +115,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with a Intelligence requriement.
         if(allPerks[i].req_name === "Intelligence" && allPerks[i].req_rank <= characterData.intelligence) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -169,9 +127,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with an Agility requriement.
         if(allPerks[i].req_name === "Agility" && allPerks[i].req_rank <= characterData.agility) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -181,9 +139,9 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
+        //The same as above, but for perks with a Luck requriement.
         if(allPerks[i].req_name === "Luck" && allPerks[i].req_rank <= characterData.luck) {
             for (let k=0; k<characterData.character_perks.length; k++){
                 if(allPerks[i].id === characterData.character_perks[k].perk_id){
@@ -193,7 +151,6 @@ async function getAvailablePerks(characterData) {
             if(!duplicatePerk){
                 availablePerksArray.push(allPerks[i]);
             }
-            //availablePerksArray.push(allPerks[i]);
         }
 
         
@@ -202,7 +159,6 @@ async function getAvailablePerks(characterData) {
         //rank matches the name and rank of an existing perk, it then loops through the character_perks arrray again to see if the potential perk allPerks[i] already exists in
         //the character_perks array. If it is not a duplicate, push it to the availablePerksArray.
         for (let j=0; j<characterData.character_perks.length; j++){
-            //console.log(`Inside characterData.character_perks loop. Looking at element ${j}. Name: ${characterData.character_perks[j].name}, Rank: ${characterData.character_perks[j].perk_rank}`);
             if(allPerks[i].req_name === characterData.character_perks[j].name && allPerks[i].req_rank === characterData.character_perks[j].perk_rank && allPerks[i].req_level <= characterData.level){
                     for (let k=0; k<characterData.character_perks.length; k++){
                         if(allPerks[i].name === characterData.character_perks[k].name && allPerks[i].perk_rank === characterData.character_perks[k].perk_rank){
@@ -218,20 +174,13 @@ async function getAvailablePerks(characterData) {
         }
     }
 
-    //console.log("===========================================================================================");
-    //console.log("RETURNING AVAILABLEPERKSARRAY")
-    //console.log(availablePerksArray);
-    //let returnArray = availablePerksArray.get({plain: true});
     return availablePerksArray;
-
-
 }
 
+//This function calculates the character's derived stats (health, action points, carry weight, and resistances). I didn't want to make these entries in the 
+//character model because they are easy enough to calculate and it means less api/database calls to update data as perks are selected.
 const calculateDerivedStats = function (characterData) {
-    // console.log("+++++++++++++++++++++++++++++++++++++++");
-    // console.log("Inside calculateDerivedStats");
-    // console.log("+++++++++++++++++++++++++++++++++++++++");
-    // console.log(characterData);
+
 
     let baseHealth = parseInt(characterData.endurance) * 5 + 80
     let leveledHealth = parseInt(characterData.endurance) / 2 + 2.5
@@ -243,13 +192,8 @@ const calculateDerivedStats = function (characterData) {
     let poisonResist = 0;
     let radiationResist = 0;
 
-    // console.log("Base Health: " + baseHealth);
-    // console.log("Leveled Health: " + leveledHealth);
-    // console.log("Total Health: " + health);
-    // console.log("Action Points: " + actionPoints);
-    // console.log("Carry Weight: " + carryWeight);
 
-    //loop through the character_perks array and apply any static bonuses from owned perks.
+    //loop through the array of owned perks and apply any static bonuses from owned perks.
     for (let i=0; i<characterData.character_perks.length; i++){
         if (characterData.character_perks[i].perk_id === 23){
             //Strong Back Rank 1
@@ -355,6 +299,7 @@ const calculateDerivedStats = function (characterData) {
 
     }
 
+    //add all of the derived stats to the character object, then return the object.
     characterData.health = health;
     characterData.actionPoints = actionPoints;
     characterData.carryWeight = carryWeight;
@@ -362,7 +307,6 @@ const calculateDerivedStats = function (characterData) {
     characterData.energyResist = energyResist;
     characterData.poisonResist = poisonResist;
     characterData.radiationResist = radiationResist;
-    //console.log(characterData);
     return characterData;
 
 }

@@ -1,11 +1,9 @@
- // Get the modal
 const modal = document.querySelector("#delete-modal");
-// Get the <span> element that closes the modal
 const span = document.querySelector(".close");
 const cancelBtnEl = document.querySelector("#cancel-btn");
 const callDelModalEl = document.querySelector("#call-modal-btn");
 
-// When the user clicks on <span> (x), close the modal
+//if the X or the Cancel button is clicked, or of the user clicks off of the modal, close the modal and do nothing.
 span.onclick = function() {
     modal.style.display = "none";
   }
@@ -14,18 +12,19 @@ cancelBtnEl.onclick = function() {
     modal.style.display = "none";
 }
   
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
   }
+}
  
-  const showDeleteModal = function (){
-    modal.style.display = "block";
-  }
+//When the delete button is clicked on, display the modal
+const showDeleteModal = function (){
+  console.log("inside showDeleteModal");
+  modal.style.display = "block";
+}
 
-//this function is called when the delete button is clicked on a post. it sends a delete call to the api for the appropriate post id.
+//This function is called when the delete button in the modal is clicked. it sends a delete call to the api for the appropriate character.
 async function deleteFormHandler(event) {
     event.preventDefault();
 

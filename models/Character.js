@@ -1,3 +1,5 @@
+//Character model - represents the character created by the user
+
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 

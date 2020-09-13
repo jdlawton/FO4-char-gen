@@ -1,5 +1,7 @@
+//api CRUD routes relating to Fallout 4 downloadable content (game expansions)
+
 const router = require('express').Router();
-const {Character, User, Perk, Dlc} = require('../../models/');
+const {Dlc} = require('../../models/');
 
 //GET all dlc /api/dlc
 router.get('/', (req, res) => {

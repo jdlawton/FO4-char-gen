@@ -1,5 +1,7 @@
+//api CRUD routes related to users
+
 const router = require('express').Router();
-const {Character, User, Perk, Dlc} = require('../../models/');
+const {User} = require('../../models/');
 
 //GET all users /api/users
 router.get('/', (req, res) => {

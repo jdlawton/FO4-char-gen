@@ -1,3 +1,5 @@
+//The user model for information pertaining to users of the applicaiton.
+
 const {Model, DataTypes} = require('sequelize');
 const sequelize = require('../config/connection');
 const bcrypt = require('bcrypt');
