@@ -12,13 +12,14 @@
   <div class="titlecard">
     <img src="/images/logo.png" alt="Fallout 4 logo">
     <h1 class="project-title">Character <br> Manager</h1>
-      
 
   </div>
   <div class="greeting divider">
-    <p>Welcome {{# if loggedIn}}{{username}}{{/if}}</p>
+    
+    <p>Welcome {{#if loggedIn}}{{username}}{{/if}}</p>
+    
     <nav>
-        {{# if loggedIn}}
+        {{#if loggedIn}}
           <a href="/dashboard">Characters</a>
           <button id="logout" class="btn-no-style">Logout</button>
         {{else}}
@@ -32,7 +33,7 @@
     {{{body}}}
   </main>
 
-  {{# if loggedIn}}
+  {{#if loggedIn}}
     <script src="/javascript/logout.js"></script>
   {{/if}}
 

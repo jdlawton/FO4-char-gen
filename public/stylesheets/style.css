@@ -357,3 +357,53 @@ table {
 .character-data label, p {
     font-weight: bold;
 }
+
+@media screen and (max-width: 980px) {
+    .titlecard {
+        flex-direction: column;
+    }
+    .titlecard img {
+        width: 100%;
+    }
+
+    .link-button {
+        padding: 3%;
+    }
+
+    .body-text p{
+        margin-bottom: 3%;
+    }
+
+    .section-divider {
+        margin-top: 5%;
+    }
+
+    .char-button {
+        padding: 3%;
+    }
+
+    .modal-body {
+        height: auto;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .modal-buttons {
+        width: 100%;
+    }
+
+    .modal-buttons .char-button {
+        width: 50%;
+    }
+
+    .special-stats {
+        width: 100%;
+    }
+
+    .stat-btn {
+        padding: 5% 10%;
+    }
+}
