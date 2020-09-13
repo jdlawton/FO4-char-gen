@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const {Character, User, Perk, Dlc, CharacterPerk} = require('../models/');
-const {perkLookup, getAvailablePerks} = require('../utilities/data-manipulation');
-//const createPDF = require('../utilities/create-pdf');
+const {perkLookup, getAvailablePerks, calculateDerivedStats} = require('../utilities/data-manipulation');
+const createPDF = require('../utilities/create-pdf');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
@@ -31,12 +31,12 @@ router.get('/', (req, res) => {
 
 //display a single character on character-view.handlebars
 router.get('/character/:id', (req, res) => {
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
-    console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
+    // console.log("++++++++++++++++++++++++++++++++++++++++++");
     Character.findOne({
         where: {
             id: req.params.id
@@ -78,8 +78,11 @@ router.get('/character/:id', (req, res) => {
             //console.log("++++++++++++++++++++++++++++++++++++++++++")
             //createPDF();
             //console.log("++++++++++++++++++++++++++++++++++++++++++")
-            const character = dbCharacterData.get({plain: true});
+            let character = dbCharacterData.get({plain: true});
             //let availablePerkArray;
+            //console.log(character);
+            //console.log("calling secondary stats");
+            character = calculateDerivedStats(character);
             //console.log(character);
             //console.log(character.id);
             //console.log(character.character_perks[0].perk_id);
@@ -139,6 +142,7 @@ router.get('/new', (req, res) => {
     res.render('new-character', {loggedIn: req.session.loggedIn});
 });
 
+//edit route for character-edit.handlebars
 router.get('/edit/:id', (req, res) => {
     Character.findOne({
         where: {
@@ -179,11 +183,12 @@ router.get('/edit/:id', (req, res) => {
                 return;
             }
 
-            const character = dbCharacterData.get({plain: true});
+            let character = dbCharacterData.get({plain: true});
+            character = calculateDerivedStats(character);
             //let perks_list = await perkLookup(character.character_perks);
             //let availablePerkArray;
             //console.log("HERE I AM");
-            console.log(character);
+            //console.log(character);
             perkLookup(character.character_perks).then(perkArray => {
                 // console.log("The updated character_perks array");
                 // console.log(perkArray);
@@ -283,7 +288,8 @@ router.get('/character/pdf/:id', (req, res) => {
                 return;
             }
             //console.log(dbCharacterData);
-            const character = dbCharacterData.get({plain: true});
+            let character = dbCharacterData.get({plain: true});
+            character = calculateDerivedStats(character);
             //console.log(character);
 
             perkLookup(character.character_perks).then(perkArray => {
@@ -291,6 +297,7 @@ router.get('/character/pdf/:id', (req, res) => {
                 //console.log(perkArray);
                 //PDF code goes here
                 //create a document
+
                 const doc = new PDFDocument;
 
                 //Pipe the output to the dist directory
@@ -299,22 +306,53 @@ router.get('/character/pdf/:id', (req, res) => {
                 //send the PDF as an HTML response
                 doc.pipe(res);
 
-                doc.text(
-                    `
-                        Character Name: ${character.name} 
-                        Level: ${character.level}
-                        Build Description: ${character.description}
+                //doc.image('public/images/logo.png');
+                doc.image('public/images/logo.png', 150, 10, {width: 300, height: 100});
 
-                        Strength: ${character.strength}
-                        Perception: ${character.perception}
-                        Endurance: ${character.endurance}
-                        Charisma: ${character.charisma}
-                        Intelligence: ${character.intelligence}
-                        Agility: ${character.agility}
-                        Luck: ${character.luck}
+                doc.fontSize(30);
+                doc.text("Character Manager", 50, 125, {
+                    align: 'center'
+                });
 
-                    `);
+                doc.fontSize(12);
+                doc.text(`${character.name}`, 50, 160, {
+                    align: 'center'
+                });
+                doc.text(`Level - ${character.level}`, 50, 175, {
+                    align: 'center'
+                });
+                doc.text(`${character.description}`, 50, 190, {
+                    align: 'center'
+                });
+                doc.moveDown();
 
+                const stats = `
+                Health: ${character.health}
+                Action Points: ${character.actionPoints}
+                Carry Weight: ${character.carryWeight}
+                Damage Resistance: ${character.damageResist}%
+                Energy Resistance: ${character.energyResist}%
+                Poison Resistance: ${character.poisonResist}%
+                Radiation Resistance: ${character.radiationResist}%
+
+                Strength: ${character.strength}
+                Perception: ${character.perception}
+                Endurance: ${character.endurance}
+                Charisma: ${character.charisma}
+                Intelligence: ${character.intelligence}
+                Agility: ${character.agility}
+                Luck: ${character.luck}
+                `;
+
+                doc.text(stats, {
+                    columns: 2,
+                    columnGap: 15,
+                    height: 120,
+                    width: 400,
+                    align: 'center'
+                });
+
+                doc.moveDown(2);
                 
                 for (let i=0; i<character.character_perks.length; i++){
 
@@ -323,11 +361,10 @@ router.get('/character/pdf/:id', (req, res) => {
                     // console.log("perk rank" + character.character_perks[i].perk_rank);
                     // console.log("perk effect" + character.character_perks[i].effect);
 
-                    doc.text (`
-                        Level ${character.character_perks[i].level_taken} Perk
-                        ${character.character_perks[i].name}, Rank: ${character.character_perks[i].perk_rank}
-                        ${character.character_perks[i].effect}
-                    `);
+                    doc.text (`Level ${character.character_perks[i].level_taken} Perk`);
+                    doc.text (`${character.character_perks[i].name}, Rank: ${character.character_perks[i].perk_rank}`);
+                    doc.text (`${character.character_perks[i].effect}`);
+                    doc.moveDown();
                 }
 
                 //finalize the PDF

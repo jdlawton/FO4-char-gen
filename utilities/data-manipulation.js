@@ -227,5 +227,145 @@ async function getAvailablePerks(characterData) {
 
 }
 
+const calculateDerivedStats = function (characterData) {
+    // console.log("+++++++++++++++++++++++++++++++++++++++");
+    // console.log("Inside calculateDerivedStats");
+    // console.log("+++++++++++++++++++++++++++++++++++++++");
+    // console.log(characterData);
 
-module.exports = {perkLookup, getAvailablePerks};
+    let baseHealth = parseInt(characterData.endurance) * 5 + 80
+    let leveledHealth = parseInt(characterData.endurance) / 2 + 2.5
+    let health = (parseInt(characterData.level) - 1) * leveledHealth + baseHealth;
+    let actionPoints = parseInt(characterData.agility) * 10 + 60;
+    let carryWeight = parseInt(characterData.strength) * 10 + 200;
+    let damageResist = 0;
+    let energyResist = 0;
+    let poisonResist = 0;
+    let radiationResist = 0;
+
+    // console.log("Base Health: " + baseHealth);
+    // console.log("Leveled Health: " + leveledHealth);
+    // console.log("Total Health: " + health);
+    // console.log("Action Points: " + actionPoints);
+    // console.log("Carry Weight: " + carryWeight);
+
+    //loop through the character_perks array and apply any static bonuses from owned perks.
+    for (let i=0; i<characterData.character_perks.length; i++){
+        if (characterData.character_perks[i].perk_id === 23){
+            //Strong Back Rank 1
+            carryWeight += 25;
+        }
+
+        if (characterData.character_perks[i].perk_id === 24){
+            //Strong Back Rank 2
+            carryWeight += 50;
+        }
+
+        if (characterData.character_perks[i].perk_id === 63){
+            //Refractor Rank 1
+            console.log("Adding refractor 1");
+            energyResist += 10;
+            console.log(energyResist);
+        }
+
+        if (characterData.character_perks[i].perk_id === 64){
+            //Refractor Rank 2
+            energyResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 65){
+            //Refractor Rank 3
+            energyResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 66){
+            //Refractor Rank 4
+            energyResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 67){
+            //Refractor Rank 5
+            energyResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 76){
+            //Toughness Rank 1
+            damageResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 77){
+            //Toughness Rank 2
+            damageResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 78){
+            //Toughness Rank 3
+            damageResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 79){
+            //Toughness Rank 4
+            damageResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 80){
+            //Toughness Rank 5
+            damageResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 84){
+            //Life Giver Rank 1
+            health += 20;
+        }
+
+        if (characterData.character_perks[i].perk_id === 85){
+            //Life Giver Rank 2
+            health += 20;
+        }
+
+        if (characterData.character_perks[i].perk_id === 86){
+            //Life Giver Rank 3
+            health += 20;
+        }
+
+        if (characterData.character_perks[i].perk_id === 91){
+            //Rad Resistant Rank 1
+            radiationResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 92){
+            //Rad Resistant Rank 2
+            radiationResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 93){
+            //Rad Resistant Rank 3
+            radiationResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 94){
+            //Rad Resistant Rank 4
+            radiationResist += 10;
+        }
+
+        if (characterData.character_perks[i].perk_id === 202){
+            //Quick Hands Rank 3
+            actionPoints += 10;
+        }
+
+    }
+
+    characterData.health = health;
+    characterData.actionPoints = actionPoints;
+    characterData.carryWeight = carryWeight;
+    characterData.damageResist = damageResist;
+    characterData.energyResist = energyResist;
+    characterData.poisonResist = poisonResist;
+    characterData.radiationResist = radiationResist;
+    //console.log(characterData);
+    return characterData;
+
+}
+
+
+module.exports = {perkLookup, getAvailablePerks, calculateDerivedStats};
